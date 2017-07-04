@@ -1,0 +1,48 @@
+/*INDEX*/
+
+#ui-view {
+  min-height: 600px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+
+/*QUAN LI*/
+
+#admin {
+  min-height: 400px;
+}
+
+#admin-header {
+  height: 50px;
+  color: #A5A4A4;
+}
+
+#admin-header .col-md-2 {
+  background-color: #333333;
+}
+
+#admin-header .col-md-10 {
+  background-color: #4E4E4E;
+}
+
+#admin-right {
+  min-height: 540px;
+  background-color: #F1F1F1;
+}
+
+#admin-left {
+  min-height: 540px;
+  background-color: #464646;
+}
+
+.ql-title {
+  height: 50px;
+  font-size: x-large;
+  padding-top: 10px
+}
+
+.ql-title-right {
+  height: 50px;
+  padding-top: 10px
+}
