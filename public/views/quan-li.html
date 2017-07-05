@@ -1,36 +1,91 @@
 <div id="admin">
   <div class="col-md-12" id="admin-header">
-    <div class="col-md-2 text-center">
+    <div class="col-md-3 text-center">
       <div class="ql-title">
         <b>TIN TỨC MỚI</b>
       </div>
     </div>
-    <div class="col-md-10 text-right">
+    <div class="col-md-9 text-right">
       <div class="ql-title-right">
-        <span>
+        <span class="admin-left-control">
           <i class="glyphicon glyphicon-home"></i>
           <b>Trang chủ</b>
         </span>
-        <span>
+        <span class="admin-left-control">
           <b>Admin</b>
-          <i class="glyphicon glyphicon-triangle-bottom"></i>
+          <span uib-dropdown is-open="admin.isopen">
+            <i id="control-ad" class="glyphicon glyphicon-triangle-bottom"  uib-dropdown-toggle></i>
+            <ul class="dropdown-menu menu-cus" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+              <li role="menuitem"><a>Ảnh đại diện</a></li>
+              <li role="menuitem"><a>Thông tin</a></li>
+              <li role="menuitem"><a>Mật khẩu</a></li>
+              <li class="divider"></li>
+              <li role="menuitem"><a>Đăng xuất</a></li>
+            </ul>
+          </span>
         </span>
       </div>
     </div>
   </div>
   <div class="col-md-12">
-    <div class="col-md-2" id="admin-left">
-      <ul>Tin tức
-        <li>Tạo mới</li>
-        <li>Danh sách bài viết</li>
-      </ul>
-      <ul>Thông tin cá nhân</ul>
-      <ul>Quản lí tài khoản</ul>
-      <ul>Quản lí nhóm </ul>
+    <div class="col-md-3" id="admin-left">
+      <uib-accordion>
+        <div uib-accordion-group class="panel" is-open="dk.thongtin">
+          <uib-accordion-heading>
+            <i class="glyphicon glyphicon-folder-open"></i>
+            <b class="admin-accor">Thông tin cá nhân</b>
+            <i class="pull-right glyphicon" ng-class="{'glyphicon-triangle-right': dk.thongtin, 'glyphicon-triangle-bottom': !dk.thongtin}"></i>
+          </uib-accordion-heading>
+          <div class="item-accor" ng-click="goChiTiet()">
+            <i class="glyphicon glyphicon-circle-arrow-right"></i><b class="admin-accor">Chi tiết</b>
+          </div>
+          <div class="item-accor" ng-click="goTaiKhoan()">
+            <i class="glyphicon glyphicon-circle-arrow-right"></i><b class="admin-accor">Tài khoản</b>
+          </div>
+        </div>
+        <div uib-accordion-group class="panel" is-open="dk.baiviet">
+          <uib-accordion-heading>
+            <i class="glyphicon glyphicon-folder-open"></i>
+            <b class="admin-accor">Bài viết</b>
+            <i class="pull-right glyphicon" ng-class="{'glyphicon-triangle-right': dk.baiviet, 'glyphicon-triangle-bottom': !dk.baiviet}"></i>
+          </uib-accordion-heading>
+          <div class="item-accor">
+            <i class="glyphicon glyphicon-circle-arrow-right"></i><b class="admin-accor">Danh sách bài viết</b>
+          </div>
+          <div class="item-accor">
+            <i class="glyphicon glyphicon-circle-arrow-right"></i><b class="admin-accor">Tạo mới bài viết</b>
+          </div>
+        </div>
+        <div uib-accordion-group class="panel" is-open="dk.user">
+          <uib-accordion-heading>
+            <i class="glyphicon glyphicon-folder-open"></i>
+            <b class="admin-accor">Quản lí người dùng</b>
+            <i class="pull-right glyphicon" ng-class="{'glyphicon-triangle-right': dk.user, 'glyphicon-triangle-bottom': !dk.user}"></i>
+          </uib-accordion-heading>
+          <div class="item-accor">
+            <i class="glyphicon glyphicon-circle-arrow-right"></i><b class="admin-accor">Danh sách người dùng</b>
+          </div>
+          <div class="item-accor">
+            <i class="glyphicon glyphicon-circle-arrow-right"></i><b class="admin-accor">Tạo mới người dùng</b>
+          </div>
+        </div>
+        <div uib-accordion-group class="panel" is-open="dk.nhom">
+          <uib-accordion-heading>
+            <i class="glyphicon glyphicon-folder-open"></i>
+            <b class="admin-accor">Danh mục tin tức</b>
+            <i class="pull-right glyphicon" ng-class="{'glyphicon-triangle-right': dk.nhom, 'glyphicon-triangle-bottom': !dk.user}"></i>
+          </uib-accordion-heading>
+          <div class="item-accor">
+            <i class="glyphicon glyphicon-circle-arrow-right"></i><b class="admin-accor">Danh sách</b>
+          </div>
+          <div class="item-accor">
+            <i class="glyphicon glyphicon-circle-arrow-right"></i><b class="admin-accor">Tạo mới</b>
+          </div>
+        </div>
+      </uib-accordion>
     </div>
-    <div class="col-md-10" id="admin-right">
-      <div>
-      </div>
+    <div class="col-md-9" id="admin-right">
+      <ui-view></ui-view>
     </div>
   </div>
 </div>

@@ -18,31 +18,60 @@
   color: #A5A4A4;
 }
 
-#admin-header .col-md-2 {
+#admin-header .col-md-3 {
   background-color: #333333;
 }
 
-#admin-header .col-md-10 {
+#admin-header .col-md-9 {
   background-color: #4E4E4E;
 }
 
 #admin-right {
-  min-height: 540px;
+  min-height: 550px;
   background-color: #F1F1F1;
 }
 
 #admin-left {
-  min-height: 540px;
+  min-height: 550px;
   background-color: #464646;
+  color: #A5A4A4;
 }
 
 .ql-title {
   height: 50px;
   font-size: x-large;
-  padding-top: 10px
+  padding-top: 10px;
+  color: green;
 }
 
 .ql-title-right {
   height: 50px;
   padding-top: 10px
+}
+
+.admin-accor {
+  margin-left: 2%;
+}
+
+.panel {
+  background-color: #4E4E4E;
+}
+
+.item-accor {
+  height: 30px;
+  margin-left: 10%;
+  cursor: pointer;
+}
+uib-accordion i {
+  color: white;
+}
+.admin-left-control {
+  cursor: pointer;
+}
+#control-ad:hover {
+  color: red;
+}
+.menu-cus {
+  left: -90px;
+  min-width: 0px;
 }
