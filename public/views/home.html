@@ -1,0 +1,59 @@
+<nav class="navbar navbar-default">
+  <div class="row-container">
+    <div class="col-md-2 col-md-offset-1 text-center">
+      <div id="img-new" ng-click="goHome()"></div>
+    </div>
+    <div class="col-md-5 btn-group" style="padding-top: 0.5%;">
+      <input type="text" name="search" class="form-control" style="width: 80%;float: left;" placeholder="Nhập nội dung tìm kiếm ...">
+      <button class="btn btn-warning">Tìm kiếm</button>
+    </div>
+    <div class="col-md-3 text-center" id="news-date">
+      <strong ng-bind="thu"></strong>
+      <span>Ngày</span>
+      <span ng-bind="ngay"></span>
+      <span id="main-user" uib-dropdown is-open="isopen">
+        <i class="glyphicon glyphicon-user" title="Đăng nhập" ng-if="!user" uib-dropdown-toggle></i>
+        <b ng-if="user" ng-bind="user.name" uib-dropdown-toggle></b>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+          <li role="menuitem" ng-if="user"><a><i class="fa fa-picture-o"></i> Ảnh đại diện</a></li>
+          <li role="menuitem" ng-if="user"><a><i class="fa fa-id-card-o"></i> Thông tin</a></li>
+          <li role="menuitem" ng-if="user"><a><i class="fa fa-key"></i> Mật khẩu</a></li>
+          <li role="menuitem" ng-if="!user" ng-click="login()"><a><i class=""></i> Đăng nhập</a></li>
+          <li role="menuitem" ng-if="!user"><a><i class=""></i> Đăng ký</a></li>
+          <li class="divider"></li>
+          <li role="menuitem" ng-click="logout()" ng-if="user"><a><i class="glyphicon glyphicon-log-out"></i> Đăng xuất</a></li>
+        </ul>
+      </span>
+    </div>
+  </div>
+</nav>
+<div class="row">
+  <div class="col-md-1">
+    <!-- banner Left -->
+  </div>
+  <div class="col-md-10">
+    <div id="line-bar">
+    </div>
+    <ul class="nav nav-pills" id="bar-chude">
+      <li role="presentation"><a href="">Thời sự</a></li>
+      <li role="presentation"><a href="">Thế giới</a></li>
+      <li role="presentation"><a href="">Kinh doanh</a></li>
+      <li role="presentation"><a href="">Pháp luật</a></li>
+      <li role="presentation"><a href="">Xuất bản</a></li>
+      <li role="presentation"><a href="">Công nghệ</a></li>
+      <li role="presentation"><a href="">Xe 360</a></li>
+      <li role="presentation"><a href="">Giải trí</a></li>
+      <li role="presentation"><a href="">Thời trang</a></li>
+      <li role="presentation"><a href="">Giáo dục</a></li>
+      <li role="presentation"><a href="">Sức khỏe</a></li>
+      <li role="presentation"><a href="">Du lịch</a></li>
+      <li role="presentation"><a href="">Khác</a></li>
+    </ul>
+    <div class="row" id="ui-view">
+      <ui-view></ui-view>
+    </div>
+  </div>
+  <div class="col-md-1">
+    <!-- banner right -->
+  </div>
+</div>

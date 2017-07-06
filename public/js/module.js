@@ -1,9 +1,11 @@
 var app = angular.module("appTinTuc", ['ui.bootstrap', 'ui.router', 'ngAnimate']);
 
-app.config(function($stateProvider, $locationProvider) {
+app.config(function($stateProvider, $locationProvider, $qProvider) {
 
   $locationProvider.html5Mode(true);
   $locationProvider.hashPrefix('');
+  $qProvider.errorOnUnhandledRejections(false);
+
   $stateProvider
     .state('admin', {
       url: '/quan-li-he-thong',
@@ -20,14 +22,24 @@ app.config(function($stateProvider, $locationProvider) {
       templateUrl: 'views/thong-tin-ca-nhan.html',
       controller: "tkCtrl"
     })
-    .state('home',{
+    .state('home', {
       url: '/trang-chu',
       templateUrl: 'views/home.html',
+      controller: "mainCtrl"
     })
 });
 
-app.run(function($rootScope, $state) {
-   $state.go('home');
+app.run(function($rootScope, $state, $uibModal) {
+  // $state.go('admin');
+  if (typeof(Storage) !== "undefined" && localStorage.id) {
+    $rootScope.user = {
+      id: localStorage.id,
+      name: localStorage.user,
+      per: localStorage.per
+    }
+    console.log($rootScope.user)
+  }
+
   function doiNgay(str) {
     var thu = "";
     switch (str) {
@@ -56,5 +68,23 @@ app.run(function($rootScope, $state) {
   }
   $rootScope.thu = doiNgay(moment().format('dddd'));
   $rootScope.ngay = moment().format("DD/MM/YYYY");
+
+  $rootScope.login = function() {
+    var modal = $uibModal.open({
+      animation: true,
+      templateUrl: "/views/modal-login.html",
+      controller: 'loginCtrl',
+      controllerAs: 'lg',
+      size: "sm"
+    })
+  }
+
+  $rootScope.logout = function() {
+    $rootScope.user = null;
+    if (typeof(Storage) !== "undefined") {
+      localStorage.clear();
+    }
+  }
+
 
 })

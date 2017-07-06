@@ -7,12 +7,13 @@
     </div>
     <div class="col-md-9 text-right">
       <div class="ql-title-right">
-        <span class="admin-left-control">
+        <span class="admin-left-control" ng-click="backHome()">
           <i class="glyphicon glyphicon-home"></i>
           <b>Trang chủ</b>
         </span>
         <span class="admin-left-control">
-          <b>Admin</b>
+          <b ng-bind="user.name" ng-if="user"></b>
+          <i ng-if="!user" ng-click="login()" class="glyphicon glyphicon-user"></i>
           <span uib-dropdown is-open="admin.isopen">
             <i id="control-ad" class="glyphicon glyphicon-triangle-bottom"  uib-dropdown-toggle></i>
             <ul class="dropdown-menu menu-cus" uib-dropdown-menu role="menu" aria-labelledby="single-button">
@@ -20,7 +21,7 @@
               <li role="menuitem"><a>Thông tin</a></li>
               <li role="menuitem"><a>Mật khẩu</a></li>
               <li class="divider"></li>
-              <li role="menuitem"><a>Đăng xuất</a></li>
+              <li role="menuitem" ng-click="logout()"><a>Đăng xuất</a></li>
             </ul>
           </span>
         </span>

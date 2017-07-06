@@ -3,6 +3,8 @@
   background-repeat: no-repeat;
   background-size: contain;
   height: 50px;
+  cursor: pointer;
+  width: 70%;
 }
 
 #news-date {
@@ -15,6 +17,19 @@
   height: 2px;
   background-color: green;
 }
-#bar-chude{
+
+#bar-chude {
   background-color: aliceblue;
+}
+
+#main-user {
+  font-size: large;
+  padding-left: 10%;
+  cursor: pointer;
+}
+
+
+/*LOGIN*/
+.login-div {
+  margin: 5%;
 }
