@@ -42,6 +42,12 @@
           <div class="item-accor" ng-click="goTaiKhoan()">
             <i class="glyphicon glyphicon-circle-arrow-right"></i><b class="admin-accor">Tài khoản</b>
           </div>
+          <div class="item-accor">
+            <i class="glyphicon glyphicon-circle-arrow-right"></i><b class="admin-accor">Đổi mật khẩu</b>
+          </div>
+          <div class="item-accor">
+            <i class="glyphicon glyphicon-circle-arrow-right"></i><b class="admin-accor">Ảnh đại diện</b>
+          </div>
         </div>
         <div uib-accordion-group class="panel" is-open="dk.baiviet">
           <uib-accordion-heading>
@@ -73,7 +79,7 @@
           <uib-accordion-heading>
             <i class="glyphicon glyphicon-folder-open"></i>
             <b class="admin-accor">Danh mục tin tức</b>
-            <i class="pull-right glyphicon" ng-class="{'glyphicon-triangle-right': dk.nhom, 'glyphicon-triangle-bottom': !dk.user}"></i>
+            <i class="pull-right glyphicon" ng-class="{'glyphicon-triangle-right': dk.nhom, 'glyphicon-triangle-bottom': !dk.nhom}"></i>
           </uib-accordion-heading>
           <div class="item-accor">
             <i class="glyphicon glyphicon-circle-arrow-right"></i><b class="admin-accor">Danh sách</b>

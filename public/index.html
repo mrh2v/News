@@ -6,6 +6,7 @@
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/css/main.css">
   <!-- lib -->
   <script type="text/javascript" src="/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -13,6 +14,7 @@
   <script type="text/javascript" src="/angular-ui-router/release/angular-ui-router.js"></script>
   <script type="text/javascript" src="/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
   <script type="text/javascript" src="/angular-animate/angular-animate.min.js"></script>
+  <script type="text/javascript" src="/moment/moment.js"></script>
   <!-- controller -->
   <script type="text/javascript" src="/js/module.js"></script>
   <script type="text/javascript" src="/js/quanli.js"></script>
@@ -20,8 +22,51 @@
 <base href="/">
 
 <body ng-app="appTinTuc">
-  <div class="row" id="ui-view">
-    <ui-view></ui-view>
+  <nav class="navbar navbar-default">
+    <div class="row-container">
+      <div class="col-md-2 col-md-offset-1 text-center" id="img-new">
+      </div>
+      <div class="col-md-5 btn-group" style="padding-top: 0.5%;">
+        <input type="text" name="search" class="form-control" style="width: 80%;float: left;" placeholder="Nhập nội dung tìm kiếm ...">
+        <button class="btn btn-warning">Tìm kiếm</button>
+      </div>
+      <div class="col-md-3 text-center" id="news-date">
+        <strong ng-bind="thu"></strong>
+        <span>Ngày</span>
+        <span ng-bind="ngay"></span>
+        <i class="glyphicon glyphicon-user" style=" font-size:large;padding-left: 10%;cursor: pointer;" title="Đăng nhập"></i>
+      </div>
+    </div>
+  </nav>
+  <div class="row">
+    <div class="col-md-1">
+      <!-- banner Left -->
+    </div>
+    <div class="col-md-10">
+      <div id="line-bar">
+      </div>
+      <ul class="nav nav-pills" id="bar-chude">
+        <li role="presentation"><a href="">Thời sự</a></li>
+        <li role="presentation"><a href="">Thế giới</a></li>
+        <li role="presentation"><a href="">Kinh doanh</a></li>
+        <li role="presentation"><a href="">Pháp luật</a></li>
+        <li role="presentation"><a href="">Xuất bản</a></li>
+        <li role="presentation"><a href="">Công nghệ</a></li>
+        <li role="presentation"><a href="">Xe 360</a></li>
+        <li role="presentation"><a href="">Giải trí</a></li>
+        <li role="presentation"><a href="">Thời trang</a></li>
+        <li role="presentation"><a href="">Giáo dục</a></li>
+        <li role="presentation"><a href="">Sức khỏe</a></li>
+        <li role="presentation"><a href="">Du lịch</a></li>
+        <li role="presentation"><a href="">Khác</a></li>
+      </ul>
+      <div class="row" id="ui-view">
+        <ui-view></ui-view>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <!-- banner right -->
+    </div>
   </div>
 </body>
 <footer class="text-center">

@@ -1,0 +1,20 @@
+#img-new {
+  background-image: url("../img/news.jpg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 50px;
+}
+
+#news-date {
+  line-height: 45px;
+  color: #774622;
+  font-size: 14px;
+}
+
+#line-bar {
+  height: 2px;
+  background-color: green;
+}
+#bar-chude{
+  background-color: aliceblue;
+}

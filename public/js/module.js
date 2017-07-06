@@ -20,8 +20,41 @@ app.config(function($stateProvider, $locationProvider) {
       templateUrl: 'views/thong-tin-ca-nhan.html',
       controller: "tkCtrl"
     })
+    .state('home',{
+      url: '/trang-chu',
+      templateUrl: 'views/home.html',
+    })
 });
 
 app.run(function($rootScope, $state) {
-  $state.go('admin');
+   $state.go('home');
+  function doiNgay(str) {
+    var thu = "";
+    switch (str) {
+      case 'Sunday':
+        thu = 'Chủ nhật';
+        break;
+      case 'Monday':
+        thu = 'Thứ hai';
+        break;
+      case 'Tuesday':
+        thu = 'Thứ ba';
+        break;
+      case 'Wednesday':
+        thu = 'Thứ tư';
+        break;
+      case 'Thursday':
+        thu = 'Thứ năm';
+        break;
+      case 'Friday':
+        thu = 'Thứ sáu';
+        break;
+      case 'Saturday':
+        thu = 'Thứ bảy';
+    }
+    return thu;
+  }
+  $rootScope.thu = doiNgay(moment().format('dddd'));
+  $rootScope.ngay = moment().format("DD/MM/YYYY");
+
 })
