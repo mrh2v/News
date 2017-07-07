@@ -8,7 +8,6 @@ var favicon = require('serve-favicon');
 var cors = require('cors');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
 
 var app = express();
 
@@ -28,7 +27,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(cors());
 app.use('/', index);
-app.use('/users', users);
 
 /*config using url for html5*/
 app.all('/*', function(req, res, next) {

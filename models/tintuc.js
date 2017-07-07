@@ -23,7 +23,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     NOI_DUNG: {
-      type: DataTypes.TEXT,
+      type: DataTypes.TEXT('long'),
       allowNull: false
     },
     THOI_GIAN: {
@@ -36,15 +36,14 @@ module.exports = function(sequelize, DataTypes) {
     },
     TU_KHOA: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
-    ANH: {
-      type: DataTypes.TEXT,
-      allowNull: false
+    ANH_TD: {
+      type: DataTypes.TEXT('long'),
+      allowNull: true
     }
-
   }, {
-    tableName: 'TINTUC',
+    tableName: 'TIN_TUC',
     freezeTableName: true,
     timestamps: false,
   });

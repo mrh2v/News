@@ -1,0 +1,44 @@
+<div class="col-md-12" style="margin-top: 2%;">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="col-md-1 text-center">Số thứ tự</th>
+        <th class="col-md-4 text-center">Tên nhóm</th>
+        <th class="col-md-2 text-center">Thứ tự hiển thị</th>
+        <th class="col-md-1 text-center">Hiển thị</th>
+        <th class="col-md-2 text-center">Chức năng</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="data in dataDs">
+        <td class="col-md-2 text-center">{{data.stt}}</td>
+        <td class="col-md-4 text-center">{{data.TEN_NHOM}}</td>
+        <td class="col-md-1 text-center">{{data.THU_TU}}</td>
+        <td class="col-md-1 text-center">{{data.HIEN_THI ? "Có" : "Không"}}</td>
+        <td class="col-md-3 text-center">
+          <button class="btn btn-success" ng-click="editNhom(data)">Sửa</button>
+          <button class="btn btn-danger">Xóa</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="text-right">
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <li>
+          <a aria-label="Previous" ng-click="selectTrang(1)">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li ng-if="trangSelect > 3"><a>...</a></li>
+        <li ng-repeat="so in renderTrang()" ng-hide="so + 3 <= trangSelect || so - 4 >= trangSelect "><a ng-bind="so" ng-click="selectTrang(so)" ng-style="{ 'background': trangSelect == so ? 'burlywood' : ''}"></a></li>
+        <li ng-if="trangSelect < soTrang - 3"><a>...</a></li>
+        <li>
+          <a aria-label="Next" ng-click="selectTrang(soTrang)">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

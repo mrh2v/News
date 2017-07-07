@@ -22,22 +22,41 @@ app.config(function($stateProvider, $locationProvider, $qProvider) {
       templateUrl: 'views/thong-tin-ca-nhan.html',
       controller: "tkCtrl"
     })
-    .state('home', {
-      url: '/trang-chu',
-      templateUrl: 'views/home.html',
-      controller: "mainCtrl"
+    .state('admin.dmdanhsach', {
+      url: '/danh-sach-nhom-tin',
+      templateUrl: 'views/danhmuc-danhsach.html',
+      controller: "danhMucCtrl",
+      controllerAs: "dm"
     })
+    .state('admin.createnhom', {
+      url: '/danh-sach-nhom-tin/create',
+      templateUrl: 'views/dm_chitiet.html',
+      controller: "danhMucChiTietCtrl",
+      controllerAs: "dm"
+    })
+    .state('admin.updatenhom', {
+      url: '/danh-sach-nhom-tin/update/:id',
+      templateUrl: 'views/dm_chitiet.html',
+      controller: "danhMucChiTietCtrl",
+      controllerAs: "dm"
+    })
+
+  /*trang chu*/
+  .state('home', {
+    url: '/trang-chu',
+    templateUrl: 'views/home.html',
+    controller: "mainCtrl"
+  })
 });
 
 app.run(function($rootScope, $state, $uibModal) {
-  // $state.go('admin');
+  $state.go('admin');
   if (typeof(Storage) !== "undefined" && localStorage.id) {
     $rootScope.user = {
       id: localStorage.id,
       name: localStorage.user,
       per: localStorage.per
     }
-    console.log($rootScope.user)
   }
 
   function doiNgay(str) {
@@ -85,6 +104,53 @@ app.run(function($rootScope, $state, $uibModal) {
       localStorage.clear();
     }
   }
+});
 
-
+app.factory("connect", function($http, $uibModal) {
+  return {
+    get: function(url, params, callback) {
+      $http({
+        url: url,
+        method: "GET",
+        params: params
+      }).then(function(res) {
+        callback(res.data);
+      }, function(err) {
+        callback(err);
+      })
+    },
+    post: function(url, data, callback) {
+      $http.post(url, data).then(function(res) {
+        return callback(res.data);
+      }, function(err) {
+        return callback(err)
+      })
+    },
+    delete: function(url, params, callback) {
+      if (params) {
+        for (var i in params) {
+          url += '/' + params[i];
+        }
+      }
+      $http.delete(url).then(function(res) {
+        return callback(res);
+      }, function(err) {
+        return callback(err)
+      })
+    },
+    modal: function(title, status, size, callback) {
+      var modal = $uibModal.open({
+        animation: true,
+        templateUrl: "/views/modal-public.html",
+        controller: 'modalCtrl',
+        controllerAs: 'modal',
+        size: size
+      })
+      modal.result.then(function(res) {
+        if (angular.isFunction(callback)) callback(res);
+      }, function() {
+        if (angular.isFunction(callback)) callback(false);
+      })
+    }
+  }
 })

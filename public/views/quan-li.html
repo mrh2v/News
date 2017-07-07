@@ -82,10 +82,10 @@
             <b class="admin-accor">Danh mục tin tức</b>
             <i class="pull-right glyphicon" ng-class="{'glyphicon-triangle-right': dk.nhom, 'glyphicon-triangle-bottom': !dk.nhom}"></i>
           </uib-accordion-heading>
-          <div class="item-accor">
-            <i class="glyphicon glyphicon-circle-arrow-right"></i><b class="admin-accor">Danh sách</b>
+          <div class="item-accor" ng-click="goDanhSachNhom()">
+            <i class="glyphicon glyphicon-circle-arrow-right" ></i><b class="admin-accor">Danh sách</b>
           </div>
-          <div class="item-accor">
+          <div class="item-accor" ng-click="goDanhSachNhomCreate()">
             <i class="glyphicon glyphicon-circle-arrow-right"></i><b class="admin-accor">Tạo mới</b>
           </div>
         </div>
