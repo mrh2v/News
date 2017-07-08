@@ -13,7 +13,7 @@
       <span ng-bind="ngay"></span>
       <span id="main-user" uib-dropdown is-open="isopen">
         <i class="glyphicon glyphicon-user" title="Đăng nhập" ng-if="!user" uib-dropdown-toggle></i>
-        <b ng-if="user" ng-bind="user.name" uib-dropdown-toggle></b>
+        <img ng-if="user" ng-src="{{user.anh}}" uib-dropdown-toggle height="50px" width="50px"  style="border: 1px solid;"/>
         <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
           <li role="menuitem" ng-if="user"><a><i class="fa fa-picture-o"></i> Ảnh đại diện</a></li>
           <li role="menuitem" ng-if="user"><a><i class="fa fa-id-card-o"></i> Thông tin</a></li>

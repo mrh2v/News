@@ -1,24 +1,77 @@
-<div class="text-center">
-  <h4>Thông tin chi tiết cá nhân</h4>
-</div>
-<div style="margin-top: 2%;">
-  <div class="text-center">
-    <h4>THÊM MỚI DANH MỤC TIN TỨC</h4>
+<div class="col-md-10 col-md-offset-1">
+  <div class="col-md-12 text-center" style="margin-top: 2%; margin-bottom: 1%;margin-left: 4%;">
+    <h4>THÔNG TIN CÁ NHÂN</h4>
   </div>
-  <form>
-    <div class="form-group">
-      <label>Tên nhóm tin tức</label>
-      <input type="text" class="form-control" placeholder="Nhập tên nhóm tin tức">
+  <div class="col-md-12">
+    <span style="padding-left: 10%;">
+      <img ng-src="{{tk.ANH}}" height="200px" width="200px" style="border: 1px solid;" >
+    </span>
+    <button style="margin-left:10%;" class="btn" ngf-select="upload($file)" ngf-resize="{width: 100, height: 100}" ng-if="editing">Chọn ảnh tải lên ...</button>
+  </div>
+  <div class="col-md-12">
+    <label style="padding-left: 17%;">Ảnh đại diện</label>
+  </div>
+  <div class="col-md-9">
+    <div class="col-md-12 ttcn">
+      <label class="col-md-4">Họ và tên :</label>
+      <div class="col-md-7">
+        <input type="text" ng-model="tk.HO_TEN" class="form-control" ng-disabled="!editing">
+      </div>
     </div>
-    <div class="form-group">
-      <label>Thứ tự</label>
-      <input type="number" class="form-control" placeholder="Nhập thứ tự hiển thị">
+    <div class="col-md-12 ttcn">
+      <label class="col-md-4">Tên hiển thị :</label>
+      <div class="col-md-7">
+        <input type="text" ng-model="tk.TEN_HIEN_THI" class="form-control" ng-disabled="!editing">
+      </div>
     </div>
-    <div class="checkbox">
-      <label>
-        <input type="checkbox"> Hiển thị
-      </label>
+    <div class="col-md-12 ttcn">
+      <label class="col-md-4">Giới tính :</label>
+      <div class="col-md-7">
+        <select ng-model="tk.GIOI_TINH" class="form-control" ng-disabled="!editing">
+          <option value selected>Chọn giới tính</option>
+          <option value="1">Nam</option>
+          <option value="0">Nữ</option>
+        </select>
+      </div>
     </div>
-    <button type="submit" class="btn btn-default">Submit</button>
-  </form>
+    <div class="col-md-12 ttcn">
+      <label class="col-md-4">Số CMND :</label>
+      <div class="col-md-7">
+        <input type="text" ng-model="tk.CMND" class="form-control" ng-disabled="!editing" pattern="[0-9]{9,13}">
+      </div>
+    </div>
+    <div class="col-md-12 ttcn">
+      <label class="col-md-4">Điện thoại liên lạc:</label>
+      <div class="col-md-7">
+        <input type="text" ng-model="tk.SDT" class="form-control" ng-disabled="!editing" pattern="[0-9]{10,11}">
+      </div>
+    </div>
+    <div class="col-md-12 ttcn">
+      <label class="col-md-4">Chức vụ:</label>
+      <div class="col-md-7">
+        <span>{{tk.chuc_vu}}</span>
+      </div>
+    </div>
+    <div class="col-md-12 ttcn">
+      <label class="col-md-4">Thời gian cập nhật:</label>
+      <div class="col-md-7">
+        <span ng-show="!editing">{{tk.tg}}</span>
+        <span ng-show="editing">{{time}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="ttcn1">
+      <button class="btn btn-info" ng-click="edit(tk)" ng-show="!editing"><i class="glyphicon glyphicon-user"></i> Chỉnh sửa thông tin</button>
+    </div>
+    <div class="ttcn1" ng-show="!editing">
+      <button class="btn btn-info"><i class="glyphicon glyphicon-warning-sign"></i> Đổi mật khẩu</button>
+    </div>
+    <div class="ttcn1" ng-show="editing">
+      <button class="btn btn-success" ng-click="luutk(tk)"><i class="glyphicon glyphicon-ok"></i> Lưu</button>
+    </div>
+    <div class="ttcn1" ng-show="editing">
+      <button class="btn btn-warning" ng-click="cancelEdit();"><i class="glyphicon glyphicon-remove"></i> Hủy</button>
+    </div>
+  </div>
 </div>

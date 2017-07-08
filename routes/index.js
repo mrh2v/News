@@ -17,12 +17,62 @@ var user = sequelize.import('../models/user.js');
 // binhluan.belongsTo(tintuc, { foreignKey: 'ID_TIN' });
 // user.belongsTo(binhluan, { foreignKey: 'ID_USER' });
 
+router.post("/hethong/login", function(req, res, next) {
+  var ob = req.body;
+  if (ob.username && ob.password) {
+    user.findOne({
+      where: {
+        TEN_DANG_NHAP: ob.username,
+        MAT_KHAU: ob.password
+      }
+    }).then(function(user) {
+      res.send(user);
+    }).catch(next);
+  } else {
+    res.sendStatus(403)
+  }
+})
+router.post("/hethong/change_password", function(req, res, next) {
+  var body = req.body;
+  user.findOne({
+    where: {
+      TEN_DANG_NHAP: body.username,
+      MAT_KHAU: body.password
+    },
+    attributes: ['ID', 'MAT_KHAU']
+  }).then(function(ob) {
+    if (ob) {
+      var obj = ob.dataValues;
+      obj.THOI_GIAN_CAP_NHAT = new Date();
+      obj.MAT_KHAU = body.newpass;
+      user.update(obj, {
+        where: { ID: obj.ID }
+      }).then(function(results) {
+        res.send(obj);
+      }).catch(next);
+    } else {
+      res.send("Mật khẩu không chính xác!")
+    }
+  }).catch(next)
+})
+
 /*USER*/
 router.get('/user/get_all', function(req, res, next) {
   user.findAll().then(function(results) {
     res.send(results);
   }).catch(next);
 })
+router.get("/user/get_by_id/:id", function(req, res, next) {
+  var id = req.params.id;
+  user.findOne({
+    where: {
+      ID: id
+    }
+  }).then(function(obj) {
+    res.send(obj)
+  }).catch(next);
+})
+
 router.post('/user/create', function(req, res, next) {
   var ob = req.body;
   ob.THOI_GIAN_CAP_NHAT = new Date();
@@ -61,6 +111,26 @@ router.get("/user/delete/:id", function(req, res, next) {
     } else {
       res.sendStatus(400);
     }
+  }).catch(next);
+})
+router.get('/user/get_offset', function(req, res, next) {
+  var offset = req.query.offset;
+  var limit = req.query.limit;
+  offset = parseInt(offset) < 0 ? 0 : parseInt(offset);
+  limit = parseInt(limit);
+  if (!req.query.offset || !req.query.limit || isNaN(offset) || isNaN(limit) || limit > 100) {
+    return res.sendStatus(403);
+  }
+  user.count().then(function(size) {
+    user.findAll({
+      offset: offset,
+      limit: limit
+    }).then(function(results) {
+      res.send({
+        data: results,
+        length: size
+      });
+    }).catch(next);
   }).catch(next);
 })
 

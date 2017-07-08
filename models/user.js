@@ -35,7 +35,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     CMND: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(50),
       allowNull: true
     },
     SDT: {

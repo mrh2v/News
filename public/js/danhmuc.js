@@ -1,4 +1,4 @@
-angular.module("appTinTuc").controller("danhMucCtrl", function($scope, $rootScope, $state, connect) {
+angular.module("appTinTuc").controller("danhMucCtrl", function($scope, $rootScope, $state, connect, toastr) {
   var dm = this;
 
   function layDuLieu(offset, limit) {
@@ -38,10 +38,26 @@ angular.module("appTinTuc").controller("danhMucCtrl", function($scope, $rootScop
   $scope.editNhom = function(data) {
     $state.go("admin.updatenhom", { id: data.ID });
   }
+
+  $scope.xoaNhom = function(data) {
+    connect.modal("XÓA DANH MỤC TIN TỨC", "Bạn có muốn xóa danh mục " + data.TEN_NHOM + "?", null, function(res) {
+      if (res) {
+        connect.delete("/nhom/delete", { id: data.ID }, function(cb) {
+          if (cb && cb.ID) {
+            toastr.success('Thao tác xóa thành công !');
+            $state.reload();
+          } else {
+            toastr.error('Thao tác xóa thất bại !');
+          }
+        })
+      }
+    })
+  }
+
   layDuLieu(0, 5);
 
 });
-angular.module("appTinTuc").controller("danhMucChiTietCtrl", function($scope, $rootScope, $state, connect, $timeout) {
+angular.module("appTinTuc").controller("danhMucChiTietCtrl", function($scope, $rootScope, $state, connect, $timeout, toastr) {
   var dm = this;
   if ($state.params.id) {
     //update
@@ -60,15 +76,12 @@ angular.module("appTinTuc").controller("danhMucChiTietCtrl", function($scope, $r
     if (ob.hien_thi) ob.HIEN_THI = 1;
     connect.post("/nhom/create", ob, function(data) {
       if (data && data.ID) {
-        $scope.status = 1;
         $scope.nhom = {}
+        toastr.success('Thao tác thêm mới thành công !');
       } else {
-        $scope.status = 2;
+        toastr.error('Thao tác thêm mới thất bại !');
       }
       dm.loading = false;
-      $timeout(function() {
-        $scope.status = null;
-      }, 5000)
     })
   }
   $scope.suaNhom = function(ob) {
@@ -76,14 +89,11 @@ angular.module("appTinTuc").controller("danhMucChiTietCtrl", function($scope, $r
     if (ob.hien_thi) ob.HIEN_THI = 1;
     connect.post("/nhom/update", ob, function(data) {
       if (data && data.ID) {
-        $scope.status = 1;
+        toastr.success('Thao tác cập nhật thành công !');
       } else {
-        $scope.status = 2;
+        toastr.error('Thao tác cập nhật thất bại !');
       }
       dm.loading = false;
-      $timeout(function() {
-        $scope.status = null;
-      }, 5000)
     })
   }
 

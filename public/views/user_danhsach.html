@@ -1,26 +1,30 @@
 <div class="col-md-12" style="margin-top: 2%;">
-<div class="text-center">
-    <h4>DANH SÁCH NHÓM TIN TỨC</h4>
+  <div class="text-center">
+    <h4>DANH SÁCH NGƯỜI DÙNG</h4>
   </div>
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th class="col-md-1 text-center">Số thứ tự</th>
-        <th class="col-md-4 text-center">Tên nhóm</th>
-        <th class="col-md-2 text-center">Thứ tự hiển thị</th>
-        <th class="col-md-1 text-center">Hiển thị</th>
-        <th class="col-md-2 text-center">Chức năng</th>
+        <th class="text-center">Số thứ tự</th>
+        <th class="text-center">Họ tên</th>
+        <th class="text-center">Tên hiển thị</th>
+        <th class="text-center">Giới tính</th>
+        <th class="text-center">Chức vụ</th>
+        <th class="text-center">SDT</th>
+        <th class="text-center">Chức năng</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="data in dataDs">
-        <td class="col-md-2 text-center">{{data.stt}}</td>
-        <td class="col-md-4 text-center">{{data.TEN_NHOM}}</td>
-        <td class="col-md-1 text-center">{{data.THU_TU}}</td>
-        <td class="col-md-1 text-center">{{data.HIEN_THI ? "Có" : "Không"}}</td>
-        <td class="col-md-3 text-center">
-          <button class="btn btn-success btn-sm" ng-click="editNhom(data)">Sửa</button>
-          <button class="btn btn-danger btn-sm" ng-click="xoaNhom(data)">Xóa</button>
+        <td class="text-center">{{data.stt}}</td>
+        <td class="text-center">{{data.HO_TEN}}</td>
+        <td class="text-center">{{data.TEN_HIEN_THI}}</td>
+        <td class="text-center">{{data.GIOI_TINH ? "Nam": "Nữ" }}</td>
+        <td class="text-center">{{data.chuc_vu}}</td>
+        <td class="text-center">{{data.SDT}}</td>
+        <td class="text-center">
+          <button class="btn btn-success btn-sm" ng-click="editUser(data)">Sửa</button>
+          <button class="btn btn-danger btn-sm" ng-click="xoaUser(data)">Xóa</button>
         </td>
       </tr>
     </tbody>

@@ -1,6 +1,9 @@
-var app = angular.module("appTinTuc", ['ui.bootstrap', 'ui.router', 'ngAnimate']);
+var app = angular.module("appTinTuc", ['ui.bootstrap', 'ui.router', 'ngAnimate', 'toastr', 'ngFileUpload', 'textAngular', 'ngSanitize']);
 
-app.config(function($stateProvider, $locationProvider, $qProvider) {
+app.config(function($stateProvider, $locationProvider, $qProvider, toastrConfig) {
+  angular.extend(toastrConfig, {
+    timeOut: 3000
+  })
 
   $locationProvider.html5Mode(true);
   $locationProvider.hashPrefix('');
@@ -13,7 +16,7 @@ app.config(function($stateProvider, $locationProvider, $qProvider) {
       controller: "quanliCtrl"
     })
     .state('admin.ttchitiet', {
-      url: '/thong-tin-ca-nhan/chi-tiet/:id',
+      url: '/thong-tin-ca-nhan/chi-tiet',
       templateUrl: 'views/thong-tin-ca-nhan.html',
       controller: "ttcnCtrl"
     })
@@ -40,6 +43,37 @@ app.config(function($stateProvider, $locationProvider, $qProvider) {
       controller: "danhMucChiTietCtrl",
       controllerAs: "dm"
     })
+    .state('admin.user', {
+      url: '/danh-sach-tai-khoan',
+      templateUrl: 'views/user_danhsach.html',
+      controller: "userDsCtrl",
+      controllerAs: "user"
+    })
+    .state('admin.createuser', {
+      url: '/danh-sach-tai-khoan/them-moi',
+      templateUrl: 'views/user_create.html',
+      controller: "userCreateCtrl",
+      controllerAs: "user"
+    })
+    .state('admin.updateuser', {
+      url: '/danh-sach-tai-khoan/chi-tiet/:id',
+      templateUrl: 'views/user_create.html',
+      controller: "userCreateCtrl",
+      controllerAs: "user"
+    })
+    .state('admin.tk', {
+      url: '/danh-sach-tai-khoan/tai-khoan',
+      templateUrl: 'views/user_tk.html',
+      controller: "userTkCtrl",
+      controllerAs: "user"
+    })
+    .state('admin.creattt', {
+      url: '/tin-tuc/them-moi',
+      templateUrl: 'views/tintuc_create.html',
+      controller: "tintucCreate",
+      controllerAs: "tt"
+    })
+
 
   /*trang chu*/
   .state('home', {
@@ -55,7 +89,9 @@ app.run(function($rootScope, $state, $uibModal) {
     $rootScope.user = {
       id: localStorage.id,
       name: localStorage.user,
-      per: localStorage.per
+      per: localStorage.per,
+      anh: localStorage.anh,
+      username: localStorage.username
     }
   }
 
@@ -132,8 +168,8 @@ app.factory("connect", function($http, $uibModal) {
           url += '/' + params[i];
         }
       }
-      $http.delete(url).then(function(res) {
-        return callback(res);
+      $http.get(url).then(function(res) {
+        return callback(res.data);
       }, function(err) {
         return callback(err)
       })
@@ -144,7 +180,10 @@ app.factory("connect", function($http, $uibModal) {
         templateUrl: "/views/modal-public.html",
         controller: 'modalCtrl',
         controllerAs: 'modal',
-        size: size
+        size: size,
+        resolve: {
+          body: { title: title, status, status }
+        }
       })
       modal.result.then(function(res) {
         if (angular.isFunction(callback)) callback(res);

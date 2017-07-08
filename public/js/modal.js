@@ -1,4 +1,6 @@
-angular.module("appTinTuc").controller('loginCtrl', function($scope, $rootScope, $uibModalInstance, $rootScope) {
-  console.log('vao day')
+angular.module("appTinTuc").controller('modalCtrl', function($scope, $rootScope, $uibModalInstance, $rootScope, body) {
+  $scope.body = body;
+  $scope.exitModal = function(res) {
+    $uibModalInstance.close(res);
+  }
 })
-

@@ -3,12 +3,6 @@
     <h4 ng-if="!dm.update">THÊM MỚI DANH MỤC TIN TỨC</h4>
     <h4 ng-if="dm.update">CẬP NHẬT DANH MỤC TIN TỨC</h4>
   </div>
-  <div class="text-center alert-success" ng-if="status == 1">
-    <h4 ng-if="status == 1">Thao tác thành công</h4>
-  </div>
-  <div class="text-center alert-danger" ng-if="status == 2">
-    <h4 ng-if="status == 2">Thao tác thất bại</h4>
-  </div>
   <div class="text-center" ng-if="dm.loading">
     <i style="color:red;" class="fa fa-spin fa-pulse fa-spinner fa-2x"></i>
   </div>
@@ -21,7 +15,7 @@
       <label>Thứ tự</label>
       <input type="number" class="form-control" placeholder="Nhập thứ tự hiển thị" ng-model="nhom.THU_TU">
     </div>
-    <div class="checkbox">
+    <div class="form-group">
       <label>
         <input type="checkbox" ng-model="nhom.hien_thi"> Hiển thị
       </label>

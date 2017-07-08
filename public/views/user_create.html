@@ -1,0 +1,68 @@
+<div style="margin-top: 2%;">
+  <div class="text-center">
+    <h4 ng-if="!update">THÊM MỚI NGƯỜI DÙNG</h4>
+    <h4 ng-if="update">CẬP NHẬT NGƯỜI DÙNG</h4>
+  </div>
+  <div class="text-center">
+    <i style="color:red;" class="fa fa-spin fa-pulse fa-spinner fa-2x" ng-if="dm.loading"></i>
+  </div>
+  <form class="col-md-10 col-md-offset-1" name="formUser">
+    <div class="text-center col-md-12 ">
+      <div style="width: 102px; height: 102px; border: 1px solid; float: right;" ngf-select="upload($file)" ngf-drop="upload($file)" ngf-resize="{width: 100, height: 100}">
+        <i ng-if="!avatar">Ảnh đại diện</i>
+        <img ng-src="{{avatar}}" ng-if="avatar" height="100px" width="100px" />
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Tên đăng nhập</label>
+        <input type="text" class="form-control" placeholder="Nhập tên đăng nhập" ng-model="tk.TEN_DANG_NHAP" required>
+      </div>
+      <div class="form-group">
+        <label>Mật khẩu</label>
+        <input type="password" class="form-control" placeholder="Nhập mật khẩu" ng-model="tk.MAT_KHAU" required>
+      </div>
+      <div class="form-group">
+        <label>Nhập lại mật khẩu</label>
+        <input type="password" class="form-control" placeholder="Nhập lại mật khẩu" ng-model="tk.mat_khau" required>
+      </div>
+      <div class="form-group">
+        <label>Số CMND</label>
+        <input type="text" class="form-control" placeholder="Nhập số chứng minh nhân dân" pattern="[0-9]{9,13}" ng-model="tk.CMND" required>
+      </div>
+      <div style="margin-left: 2%;">
+        <label>Giới tính</label>
+        <input type="radio" style="margin-left: 2%;" value="1" ng-model="tk.GIOI_TINH">Nam
+        <input type="radio" style="margin-left: 2%;" value="0" ng-model="tk.GIOI_TINH">Nữ
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Tên hiển thị</label>
+        <input type="text" class="form-control" placeholder="Nhập thứ tự hiển thị" ng-model="tk.TEN_HIEN_THI" required>
+      </div>
+      <div class="form-group">
+        <label>Họ và tên</label>
+        <input type="text" class="form-control" placeholder="Nhập tên nhóm tin tức" ng-model="tk.HO_TEN" required>
+      </div>
+      <div class="form-group">
+        <label>Số điện thoại</label>
+        <input type="text" class="form-control" placeholder="Nhập số điện thoại" pattern="[0-9]{10,11}" ng-model="tk.SDT">
+      </div>
+      <div class="form-group">
+        <label>Chức vụ</label>
+        <select ng-model="tk.QUYEN" class="form-control" required>
+          <option value selected>Chọn chức vụ</option>
+          <option value="1" selected>Admin</option>
+          <option value="2" selected>Công tác viên</option>
+          <option value="3" selected>Bạn đọc</option>
+          <option value="99" selected>Root</option>
+        </select>
+      </div>
+    </div>
+    <div class="text-right">
+      <button type="submit" class="btn btn-success" ng-click="themtk(tk)" ng-disabled="dm.loading ||formUser.$invalid || tk.mat_khau != tk.MAT_KHAU" ng-if="!update">Thêm mới</button>
+      <button type="submit" class="btn btn-success" ng-click="suatk(tk)"  ng-if="update">Cập nhật</button>
+    </div>
+  </form>
+</div>

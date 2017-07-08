@@ -14,7 +14,7 @@
 }
 
 #admin-header {
-  height: 50px;
+  height: 60px;
   color: #A5A4A4;
 }
 
@@ -38,15 +38,15 @@
 }
 
 .ql-title {
-  height: 50px;
+  height: 60px;
   font-size: x-large;
   padding-top: 10px;
   color: green;
 }
 
 .ql-title-right {
-  height: 50px;
-  padding-top: 10px
+  height: 60px;
+  padding-top: 10px;
 }
 
 .admin-accor {
@@ -62,16 +62,28 @@
   margin-left: 10%;
   cursor: pointer;
 }
+
 uib-accordion i {
   color: white;
 }
+
 .admin-left-control {
   cursor: pointer;
+  padding-right: 2%;
 }
+
 #control-ad:hover {
   color: red;
 }
+
 .menu-cus {
   left: -90px;
   min-width: 0px;
+}
+
+.ttcn {
+  margin-top: 1%;
+}
+.ttcn1 {
+  margin-top: 15%;
 }
