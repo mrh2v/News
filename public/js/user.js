@@ -26,7 +26,6 @@ angular.module("appTinTuc").controller("userDsCtrl", function($scope, $rootScope
       }
     }
     $scope.dataDs = data;
-    console.log(data);
   }
 
   $scope.renderTrang = function() {

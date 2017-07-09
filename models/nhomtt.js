@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     HIEN_THI: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
     },
     THU_TU: {
       type: DataTypes.INTEGER,

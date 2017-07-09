@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th7 07, 2017 lúc 03:28 PM
+-- Thời gian đã tạo: Th7 06, 2017 lúc 02:45 PM
 -- Phiên bản máy phục vụ: 10.1.24-MariaDB
 -- Phiên bản PHP: 7.1.6
 
@@ -33,8 +33,7 @@ CREATE TABLE `binh_luan` (
   `ID_TIN` int(11) NOT NULL,
   `NOI_DUNG` varchar(255) NOT NULL,
   `ID_USER` int(11) NOT NULL,
-  `NGUOI_BINH_LUAN` varchar(255) NOT NULL,
-  `THOI_GIAN` date DEFAULT NULL
+  `NGUOI_BINH_LUAN` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -46,21 +45,10 @@ CREATE TABLE `binh_luan` (
 CREATE TABLE `nhom_tt` (
   `ID` int(11) NOT NULL,
   `TEN_NHOM` varchar(255) NOT NULL,
-  `HIEN_THI` tinyint(1) NOT NULL,
-  `THU_TU` tinyint(4) NOT NULL
+  `HIEN_THI` tinyint(4) NOT NULL,
+  `THU_TU` tinyint(4) NOT NULL,
+  `LINH_VUC` tinyint(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Đang đổ dữ liệu cho bảng `nhom_tt`
---
-
-INSERT INTO `nhom_tt` (`ID`, `TEN_NHOM`, `HIEN_THI`, `THU_TU`) VALUES
-(1, 'Thế giới', 1, 1),
-(2, 'Thời sự', 1, 2),
-(3, 'Kinh doanh', 1, 3),
-(4, 'Pháp luật', 1, 4),
-(5, 'Công nghệ', 1, 5),
-(6, 'Xe 360', 1, 6);
 
 -- --------------------------------------------------------
 
@@ -93,16 +81,6 @@ CREATE TABLE `tin_tuc` (
   `ANH_TD` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Đang đổ dữ liệu cho bảng `tin_tuc`
---
-
-INSERT INTO `tin_tuc` (`ID`, `ID_LOAI_TIN`, `ID_NGUOI_DANG`, `TIEU_DE`, `NOI_DUNG_TT`, `NOI_DUNG`, `THOI_GIAN`, `SO_LAN_XEM`, `TU_KHOA`, `ANH_TD`) VALUES
-(1, 1, 1, 'Test tin tức đầu tiên', 'dkm kdmdkm kdmdkm kdmdkm kdmdkm kdm', 'Nhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích tNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuhương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếu', '2017-07-07 07:00:48', 0, 'tin dau tien, dkm', NULL),
-(2, 1, 1, 'Test tin tức t2', 'dkm kdmdkm kdmdkm kdmdkm kdmdkm kdm', 'Nhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích tNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuhương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếu', '2017-07-07 07:01:15', 0, 'tin dau tien, dkm', NULL),
-(3, 2, 1, 'Test tin tức 3', 'dkm kdmdkm kdmdkm kdmdkm kdmdkm kdm', 'Nhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích tNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuhương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếu', '2017-07-07 07:01:27', 0, 'tin dau tien, dkm', NULL),
-(4, 2, 1, 'Test tin tức 4', 'dkm kdmdkm kdmdkm kdmdkm kdmdkm kdm', 'Nhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích tNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuhương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếuNhận thức được nhu cầu tìm hiểu thông tin, giải trí của xã hội, là sự ra đời của hàng loạt website cho các mục đích thương mại, giải trí, tin tức…Để đáp ứng với việc cập nhật thông tin hàng ngày, tình hình xã hội, chính trị, thời sự, và sức khỏe… thì website tin tức ra đời là một nhu cầu tất yếu', '2017-07-07 07:01:33', 0, 'tin dau tien, dkm', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -116,19 +94,12 @@ CREATE TABLE `user` (
   `MAT_KHAU` varchar(255) NOT NULL,
   `TEN_HIEN_THI` varchar(50) DEFAULT NULL,
   `GIOI_TINH` tinyint(1) DEFAULT NULL,
-  `QUYEN` tinyint(4) DEFAULT NULL,
+  `QUYEN` tinyint(4) NOT NULL,
   `THOI_GIAN_CAP_NHAT` datetime NOT NULL,
   `CMND` int(11) DEFAULT NULL,
-  `SDT` varchar(50) DEFAULT NULL,
+  `SDT` int(11) DEFAULT NULL,
   `ANH` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Đang đổ dữ liệu cho bảng `user`
---
-
-INSERT INTO `user` (`ID`, `HO_TEN`, `TEN_DANG_NHAP`, `MAT_KHAU`, `TEN_HIEN_THI`, `GIOI_TINH`, `QUYEN`, `THOI_GIAN_CAP_NHAT`, `CMND`, `SDT`, `ANH`) VALUES
-(1, 'Hoàng Văn Hùng', 'mrh2v', 'mrh2v', NULL, 1, 99, '2017-07-07 03:16:31', NULL, NULL, NULL);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -177,7 +148,7 @@ ALTER TABLE `binh_luan`
 -- AUTO_INCREMENT cho bảng `nhom_tt`
 --
 ALTER TABLE `nhom_tt`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT cho bảng `theo_doi`
 --
@@ -187,12 +158,12 @@ ALTER TABLE `theo_doi`
 -- AUTO_INCREMENT cho bảng `tin_tuc`
 --
 ALTER TABLE `tin_tuc`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;COMMIT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

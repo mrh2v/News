@@ -1,9 +1,10 @@
 angular.module("appTinTuc").controller('quanliCtrl', [ "$state", "$rootScope", "$scope", "toastr", function($state, $rootScope, $scope, toastr) {
   $scope.goChiTiet = function() {
     $state.go("admin.ttchitiet", { id: $rootScope.user.id });
-    // console.log($rootScope.user);
   }
-
+  $scope.goDanhSachTT = function(){
+    $state.go("admin.dstintuc")
+  }
   $scope.backHome = function() {
     $state.go('home');
   }

@@ -2,8 +2,52 @@
   <h4>SOẠN THẢO BÀI VIẾT</h4>
 </div>
 <div class="col-md-12">
-  <text-angular ng-model="noidung"></text-angular>
+  <form>
+    <div class="form-group">
+      <label>Tiêu đề</label>
+      <input type="text" class="form-control" placeholder="Nhập tiêu đề bài viết" ng-model="tintuc.TIEU_DE" maxlength="255">
+    </div>
+    <div class="col-md-12" style="margin-bottom: 1%;">
+      <div style="height: 202px; width: 302px; border: 1px dashed; margin-left: 30%;" ngf-select="uploadAnh($file)" ngf-drop="uploadAnh($file)">
+        <i ng-if="!tieudeAnh">Ảnh tiêu đề bài viết</i>
+        <img ng-src="{{tieudeAnh}}" ng-if="tieudeAnh" height="200px" width="300px" />
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="col-md-6 form-group">
+        <label>Danh mục tin tức</label>
+        <select class="form-control" ng-model="tintuc.ID_LOAI_TIN">
+          <option value selected>Chọn danh mục tin tức</option>
+          <option ng-repeat="dm in danhmucs" value="{{dm.ID}}">{{dm.TEN_NHOM}}</option>
+        </select>
+      </div>
+      <div class="col-md-6 form-group">
+        <label>Từ khóa tìm kiếm</label>
+        <input type="text" class="form-control" placeholder="Nhập từ khóa tìm kiếm" ng-model="tintuc.TU_KHOA" maxlength="255">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Nội dung tóm tắt</label>
+      <textarea row="5" cols="50" class="form-control" placeholder="Nhập nội dung tóm tắt" ng-model="tintuc.NOI_DUNG_TT"></textarea>
+    </div>
+  </form>
+</div>
+<div class="form-group col-md-12">
+  <label>Nội dung tin tức</label>
+</div>
+<div class="col-md-12" style="margin-bottom: 1%;" ng-repeat="file in files">
+  <div class="col-md-5">
+    <button ng-class="{'btn' : !file.name, 'btn btn-success': file.name}" ngf-select="upload($file)" ng-disabled="file.url">{{file.name ? file.name : "Upload tập tin ..."}}</button>
+    <button class="btn btn-primary" ng-click="saveFile($index)" ng-if="!file.url">Lấy đường dẫn</button>
+  </div>
+  <div class="col-md-7">
+    <input type="text" class="form-control" placeholder="Đường dẫn file" ng-model="file.url">
+  </div>
 </div>
 <div class="col-md-12">
-  <textarea ckeditor="editorOptions" ng-model="modelName"></textarea>
+  <text-angular ng-model="noidung"></text-angular>
+</div>
+<div class="col-md-12 text-right" style="margin-top: 1%;">
+  <button class="btn btn-info" ng-click="detailTintuc(tintuc)">Xem trước</button>
+  <button class="btn btn-success" ng-click="saveTintuc(tintuc)">Đăng tải bài viết</button>
 </div>

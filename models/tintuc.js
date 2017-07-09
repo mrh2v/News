@@ -39,7 +39,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     ANH_TD: {
-      type: DataTypes.TEXT('long'),
+      type: DataTypes.TEXT("long"),
       allowNull: true
     }
   }, {

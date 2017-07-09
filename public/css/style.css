@@ -84,6 +84,29 @@ uib-accordion i {
 .ttcn {
   margin-top: 1%;
 }
+
 .ttcn1 {
   margin-top: 15%;
+}
+
+.ul-cus {
+  min-width: 0px;
+}
+
+.new-left {
+  height: 630px;
+}
+
+.new-left-over {
+  position: relative;
+  overflow: hidden;
+  height: 630px;
+  max-width: 100%;
+  outline: 0;
+  direction: ltr;
+}
+
+.hr-cus {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }

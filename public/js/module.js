@@ -1,10 +1,10 @@
 var app = angular.module("appTinTuc", ['ui.bootstrap', 'ui.router', 'ngAnimate', 'toastr', 'ngFileUpload', 'textAngular', 'ngSanitize']);
 
-app.config(function($stateProvider, $locationProvider, $qProvider, toastrConfig) {
+app.config(function($stateProvider, $locationProvider, $qProvider, toastrConfig, $provide, $sceProvider) {
   angular.extend(toastrConfig, {
     timeOut: 3000
   })
-
+  $sceProvider.enabled(true);
   $locationProvider.html5Mode(true);
   $locationProvider.hashPrefix('');
   $qProvider.errorOnUnhandledRejections(false);
@@ -73,6 +73,18 @@ app.config(function($stateProvider, $locationProvider, $qProvider, toastrConfig)
       controller: "tintucCreate",
       controllerAs: "tt"
     })
+    .state('admin.dstintuc', {
+      url: '/tin-tuc/danh-sach',
+      templateUrl: 'views/tintuc_danhsach.html',
+      controller: "tintucDs",
+      controllerAs: "tt"
+    })
+    .state('admin.updateTintuc', {
+      url: '/tin-tuc/cap-nhat/:id',
+      templateUrl: 'views/tintuc_create.html',
+      controller: "tintucCreate",
+      controllerAs: "tt"
+    })
 
 
   /*trang chu*/
@@ -84,7 +96,7 @@ app.config(function($stateProvider, $locationProvider, $qProvider, toastrConfig)
 });
 
 app.run(function($rootScope, $state, $uibModal) {
-  $state.go('admin');
+  // $state.go('admin');
   if (typeof(Storage) !== "undefined" && localStorage.id) {
     $rootScope.user = {
       id: localStorage.id,
@@ -193,3 +205,17 @@ app.factory("connect", function($http, $uibModal) {
     }
   }
 })
+
+var convertTAYouTubeMarkupToIframe = function(str) {
+  if (!str) {
+    return str;
+  }
+  var regExp = /<img class="ta-insert-video" src="(.*?)" ta-insert-video="(.*?)" contenteditable="false" allowfullscreen="true" frameborder="0"(.*?)\/>/g;
+  str = str.replace(regExp, replaceWithFn);
+  return str;
+};
+
+
+function replaceWithFn(str, p1, p2) {
+  return '<div class="auto-resizable-iframe"><div><iframe style="width: 100%; height: 400px;"  src="' + p2 + '" frameborder="0" allowfullscreen></iframe></div></div>';
+}

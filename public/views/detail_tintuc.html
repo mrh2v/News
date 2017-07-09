@@ -1,0 +1,15 @@
+<div class="modal-header text-center">
+  <h3 class="modal-title">XEM THỬ BÀI VIẾT</h3>
+</div>
+<div class="modal-body">
+  <h3 class="text-center">
+  	<b ng-bind="body.TIEU_DE"></b>
+  </h3>
+  <div style="margin-bottom: 0.5%;">
+  	<b ng-bind="body.NOI_DUNG_TT"></b>
+  </div>
+  <div ng-bind-html="renderHTML(body.NOI_DUNG)"></div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-info" ng-click="exitModal()">Đóng</button>
+</div>

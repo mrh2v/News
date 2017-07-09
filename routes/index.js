@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var path = require("path");
 var moment = require("moment");
+var path = require('path');
+var fs = require("fs");
+var mkdirp = require('mkdirp');
 var sequelize = require('../models');
 var nhom = sequelize.import('../models/nhomtt.js');
 var tintuc = sequelize.import('../models/tintuc.js');
@@ -12,10 +15,83 @@ var user = sequelize.import('../models/user.js');
 //moment.tz.setDefault("Hanoi/VietNa");
 /*tạo ràng buộc dữ liệu*/
 
-// nhom.belongsTo(tintuc, { foreignKey: 'ID_LOAI_TIN' });
-// user.belongsTo(tintuc, { foreignKey: 'ID_NGUOI_DANG' });
+tintuc.belongsTo(nhom, { foreignKey: 'ID_LOAI_TIN', as: "NHOM" });
+tintuc.belongsTo(user, { foreignKey: 'ID_NGUOI_DANG', as: "NGUOI_DANG" });
 // binhluan.belongsTo(tintuc, { foreignKey: 'ID_TIN' });
 // user.belongsTo(binhluan, { foreignKey: 'ID_USER' });
+router.get('/tintuc/get_new', function(req, res, next) {
+  tintuc.findAll({
+    order: [
+      ["THOI_GIAN", "DESC"]
+    ],
+    offset: 0,
+    limit: 20,
+    attributes: ['ID', 'TIEU_DE', 'NOI_DUNG_TT', 'THOI_GIAN', 'ANH_TD'],
+  }).then(function(results) {
+    res.send(results);
+  }).catch(next);
+})
+
+router.get('/tintuc/get_by_id/:id', function(req, res, next) {
+  var id = req.params.id;
+  tintuc.findOne({
+    where: {
+      ID: id
+    }
+  }).then(function(results) {
+    res.send(results);
+  }).catch(next);
+})
+
+router.get('/tintuc/get_offset', function(req, res, next) {
+  var offset = req.query.offset;
+  var limit = req.query.limit;
+  var id = req.query.id;
+  offset = parseInt(offset) < 0 ? 0 : parseInt(offset);
+  limit = parseInt(limit);
+  if (!req.query.offset || !req.query.limit || isNaN(offset) || isNaN(limit) || limit > 100) {
+    return res.sendStatus(403);
+  }
+  var dk = {
+    offset: offset,
+    limit: limit,
+    attributes: ['ID', 'ID_LOAI_TIN', 'ID_NGUOI_DANG', 'TIEU_DE', 'SO_LAN_XEM', 'NOI_DUNG_TT', 'THOI_GIAN'],
+    include: [
+      { model: nhom, as: "NHOM", attributes: ['ID', 'TEN_NHOM'] },
+      { model: user, as: "NGUOI_DANG", attributes: ['ID', 'HO_TEN', 'TEN_HIEN_THI'] }
+    ],
+    order: [
+      ["THOI_GIAN", "DESC"]
+    ]
+  }
+  if (id) {
+    dk.where = {
+      ID_NGUOI_DANG: id
+    }
+  }
+  tintuc.count().then(function(size) {
+    tintuc.findAll(dk).then(function(results) {
+      res.send({
+        data: results,
+        length: size
+      });
+    }).catch(next);
+  }).catch(next);
+})
+
+router.post("/hethong/save_img", function(req, res, next) {
+  var file = req.body;
+  var folder = new Date().getTime();
+  mkdirp(path.join(__dirname, "/..") + "/upload/" + file.id + "/" + folder, function(err) {
+    if (err) res.sendStatus(500);
+    var url = path.join(__dirname, "/..") + "/upload/" + file.id + "/" + folder + "/" + file.name;
+    var data = file.data.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    fs.writeFile(url, new Buffer(data[2], "base64"), function(err) {
+      if (err) res.sendStatus(500);
+      res.send("/" + file.id + "/" + folder + "/" + file.name);
+    })
+  })
+})
 
 router.post("/hethong/login", function(req, res, next) {
   var ob = req.body;
@@ -202,29 +278,11 @@ router.get('/tintuc/get_all', function(req, res, next) {
     res.send(results);
   }).catch(next);
 })
-router.get('/tintuc/get_offset', function(req, res, next) {
-  var offset = req.query.offset;
-  var limit = req.query.limit;
-  offset = parseInt(offset) < 0 ? 0 : parseInt(offset);
-  limit = parseInt(limit);
-  if (!req.query.offset || !req.query.limit || isNaN(offset) || isNaN(limit) || limit > 100) {
-    return res.sendStatus(403);
-  }
-  tintuc.count().then(function(size) {
-    tintuc.findAll({
-      offset: offset,
-      limit: limit
-    }).then(function(results) {
-      res.send({
-        data: results,
-        length: size
-      });
-    }).catch(next);
-  }).catch(next);
-})
+
 router.post('/tintuc/create', function(req, res, next) {
   var ob = req.body;
   ob.THOI_GIAN = new Date();
+  ob.SO_LAN_XEM = 0;
   tintuc.create(ob).then(function(u) {
     res.send(u);
   }).catch(next)
@@ -289,14 +347,19 @@ router.get('/tintuc/get_by_loaitin/:id', function(req, res, next) {
   }).catch(next);
 })
 
+
 /*NHOM TT*/
 router.get('/nhom/get_all', function(req, res, next) {
-  nhom.findAll().then(function(results) {
+  nhom.findAll({
+      order: [
+        ["THU_TU", "ASC"]
+      ]
+    }
+  ).then(function(results) {
     res.send(results);
   }).catch(next);
 })
 router.get('/nhom/get_by_id/:id', function(req, res, next) {
-  console.log(req.params.id)
   nhom.findOne({
     where: {
       ID: req.params.id

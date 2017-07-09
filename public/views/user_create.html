@@ -8,9 +8,9 @@
   </div>
   <form class="col-md-10 col-md-offset-1" name="formUser">
     <div class="text-center col-md-12 ">
-      <div style="width: 102px; height: 102px; border: 1px solid; float: right;" ngf-select="upload($file)" ngf-drop="upload($file)" ngf-resize="{width: 100, height: 100}">
+      <div style="width: 102px; height: 102px; border: 1px solid; float: right;" ngf-select="upload($file)" ngf-drop="upload($file)">
         <i ng-if="!avatar">Ảnh đại diện</i>
-        <img ng-src="{{avatar}}" ng-if="avatar" height="100px" width="100px" />
+        <img ng-src="{{avatar}}" ng-if="avatar"/>
       </div>
     </div>
     <div class="col-md-6">

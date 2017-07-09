@@ -35,20 +35,86 @@
     <div id="line-bar">
     </div>
     <ul class="nav nav-pills" id="bar-chude">
-      <li role="presentation"><a href="">Thời sự</a></li>
-      <li role="presentation"><a href="">Thế giới</a></li>
-      <li role="presentation"><a href="">Kinh doanh</a></li>
-      <li role="presentation"><a href="">Pháp luật</a></li>
-      <li role="presentation"><a href="">Xuất bản</a></li>
-      <li role="presentation"><a href="">Công nghệ</a></li>
-      <li role="presentation"><a href="">Xe 360</a></li>
-      <li role="presentation"><a href="">Giải trí</a></li>
-      <li role="presentation"><a href="">Thời trang</a></li>
-      <li role="presentation"><a href="">Giáo dục</a></li>
-      <li role="presentation"><a href="">Sức khỏe</a></li>
-      <li role="presentation"><a href="">Du lịch</a></li>
-      <li role="presentation"><a href="">Khác</a></li>
+      <li role="presentation" ng-repeat="dm in showDanhMuc">
+        <a ng-bind="dm.TEN_NHOM"></a>
+      </li>
+      <li role="presentation" uib-dropdown is-open="openDm" uib-dropdown-toggle><a>Khác</a>
+        <ul class="dropdown-menu ul-cus" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+          <li role="menuitem" ng-repeat="dm in hideDanhMuc">
+            <a ng-bind="dm.TEN_NHOM"></a>
+          </li>
+        </ul>
+      </li>
     </ul>
+    <div clas="row">
+      <div class="col-md-12">
+        <div class="col-md-9">
+          <b style="color: orange">TIN TỨC MỚI  </b>
+        </div>
+        <div class="col-md-3 text-center">ĐỌC NHIỀU NHẤT</div>
+      </div>
+      <div class="col-md-6 new-left" style="border: 1px solid #ededed;">
+        <div class="col-md-12" style="border-bottom: 1px solid #ededed;">
+          <img width="100%" height="300" ng-src="{{data[0].ANH_TD}}" style="margin-top: 1%;">
+          <h4>
+            <b ng-bind="data[0].TIEU_DE"></b>
+          </h4>
+          <div ng-bind="data[0].NOI_DUNG_TT"></div>
+        </div>
+        <div class="col-md-12" style="margin-top: 1%;">
+          <div class="col-md-6 text-center">
+            <img width="100%" height="150" ng-src="{{data[1].ANH_TD}}">
+            <h5 class="text-left">
+              <b ng-bind="data[1].TIEU_DE"></b>
+            </h5>
+          </div>
+          <div class="col-md-6 text-center">
+            <img width="100%" height="150" ng-src="{{data[2].ANH_TD}}">
+            <h5 class="text-left">
+              <b ng-bind="data[2].TIEU_DE"></b>
+            </h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 new-left new-left-over" style="border: 1px solid #ededed;">
+        <div ng-repeat="tin in data" ng-if="$index > 2">
+          <img width="100%" height="150" ng-src="{{tin.ANH_TD}}" ng-if="$index < 4" style="margin-top: 2%;">
+          <div><b ng-bind="tin.TIEU_DE"></b></div>
+          <hr class="hr-cus" />
+        </div>
+      </div>
+      <div class="col-md-3 new-left" style="border: 1px solid #ededed;">
+      </div>
+      <span>
+        <div style="height: 1px; background: green; margin-top: 1%;" class="col-md-12"></div>
+        <div class="col-md-12" style="border-bottom: 1px solid #ededed; margin-top: 1%; margin-bottom: 1%;">
+          <b style="color: blue;">
+            Thế giới
+          </b>
+        </div>
+        <div class="col-md-12">
+          <div class="col-md-4">
+            <label ng-bind="data[0].TIEU_DE"></label>
+              <div style="width: 50%; float: left;">
+                <img ng-src="{{data[0].ANH_TD}}" height="120" width="140">
+              </div>
+            <div style="width: 49%; float: right;"" ng-bind="data[0].NOI_DUNG_TT"></div>
+          </div>
+          <div class="col-md-4">
+            <label ng-bind="data[0].TIEU_DE"></label>
+              <div style="width: 50%; float: left;">
+                <img ng-src="{{data[0].ANH_TD}}" height="120" width="140">
+              </div>
+            <div style="width: 49%; float: right;"" ng-bind="data[0].NOI_DUNG_TT"></div>
+          </div>
+          <div class="col-md-4">
+            <div ng-repeat="tin in data" ng-if="$index < 4" style="padding-bottom: 2%;">
+              <b ng-bind="tin.TIEU_DE"></b>
+            </div>
+          </div>
+        </div>
+      </span>
+    </div>
     <div class="row" id="ui-view">
       <ui-view></ui-view>
     </div>
