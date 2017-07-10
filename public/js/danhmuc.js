@@ -86,7 +86,11 @@ angular.module("appTinTuc").controller("danhMucChiTietCtrl", function($scope, $r
   }
   $scope.suaNhom = function(ob) {
     dm.loading = true;
-    if (ob.hien_thi) ob.HIEN_THI = 1;
+    if (ob.hien_thi) {
+      ob.HIEN_THI = 1;
+    } else {
+      ob.HIEN_THI = 0;
+    }
     connect.post("/nhom/update", ob, function(data) {
       if (data && data.ID) {
         toastr.success('Thao tác cập nhật thành công !');

@@ -86,17 +86,24 @@ app.config(function($stateProvider, $locationProvider, $qProvider, toastrConfig,
       controllerAs: "tt"
     })
 
-
   /*trang chu*/
   .state('home', {
     url: '/trang-chu',
     templateUrl: 'views/home.html',
     controller: "mainCtrl"
   })
+  .state('home.xemTintuc', {
+      url: '/tin-tuc/noi-dung/:id',
+      templateUrl: 'views/tintuc_xem.html',
+      controller: "tintucCtrl",
+      controllerAs: "tt"
+    })
 });
 
 app.run(function($rootScope, $state, $uibModal) {
   // $state.go('admin');
+  $rootScope.danhMucActive = null;
+
   if (typeof(Storage) !== "undefined" && localStorage.id) {
     $rootScope.user = {
       id: localStorage.id,

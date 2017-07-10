@@ -1,0 +1,48 @@
+<div class="col-md-12 text-center" style="margin-top: 2%;">
+  <h1><b ng-bind="tin.TIEU_DE"></b></h1>
+  <div style="margin-top: 2%;">
+    <i ng-bind="tin.time"></i><i class="glyphicon glyphicon-eye-open" style="margin-left: 2%;"></i><b ng-bind="tin.SO_LAN_XEM"></b>
+  </div>
+</div>
+<div class="col-md-12" style="margin-top: 2%;">
+  <h4 class="col-md-10 col-md-offset-1">
+    <b ng-bind="tin.NOI_DUNG_TT"></b>
+  </h4>
+</div>
+<div class="col-md-10 col-md-offset-1" style="margin-top: 2%;border-bottom: 1px solid gainsboro;">
+  <div ng-bind-html="tin.NOI_DUNG"></div>
+</div>
+<br/>
+<div class="col-md-10 col-md-offset-1" style="margin-top: 2%;" ng-if="tin">
+  <div class="col-md-12" style="border-bottom: 3px solid #FFF;background: #f7f7f7">
+    <div>
+      <label class="col-md-2">Tên bạn đọc :</label>
+      <label ng-if="user" ng-bind="user.username"></label>
+      <input type="text" placeholder="Tên người bình luận" ng-if="!user" class="form-control" style="width: 30%;" ng-model="tt.binhluan.name">
+    </div>
+    <div class="col-md-10 col-md-offset-1" style="margin-top: 2%;">
+      <textarea rows="4" cols="40" placeholder="Bạn nghĩ gì về điều này ..." class="form-control" ng-model="tt.binhluan.noidung"></textarea>
+    </div>
+    <div class="col-md-10 col-md-offset-1" style="margin-top: 2%;">
+      <button class="btn btn-primary" ng-click="sendBinhLuan(tt.binhluan)">Gửi bình luận</button>
+    </div>
+  </div>
+</div>
+<div class="col-md-10 col-md-offset-1" ng-if="tin">
+  <h4 style="color: blue;">
+    Ý KIẾN BẠN ĐỌC (4)
+  </h4>
+  <div class="col-md-12" ng-repeat="bl in binhluans" style="border-bottom: 1px solid #d6c1c1; margin-bottom: 1%;">
+    <div class="col-md-1">
+      <img ng-src="{{bl.USER && bl.USER.ANH ? bl.USER.ANH : urlAvatar}}" height="50" width="50" />
+    </div>
+    <div class="col-md-11">
+      <div>
+        <b style="color: green;" ng-bind="bl.NGUOI_BINH_LUAN"></b>
+      </div>
+      <div ng-bind="bl.NOI_DUNG">
+      </div>
+      <i style="float: right;font-size: small">{{bl.THOI_GIAN | date: ' HH:mm dd/MM/yyyy' }}</i>
+    </div>
+  </div>
+</div>

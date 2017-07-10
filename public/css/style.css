@@ -110,3 +110,6 @@ uib-accordion i {
   margin-top: 5px;
   margin-bottom: 5px;
 }
+.tin-click  {
+  cursor: pointer;;
+}

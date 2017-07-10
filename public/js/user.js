@@ -105,6 +105,7 @@ angular.module("appTinTuc").controller("userCreateCtrl", function($scope, $rootS
         $scope.tk = {
           GIOI_TINH: "1",
         }
+        $scope.avatar = null;
       } else {
         toastr.error('Thêm người dùng thất bại !');
       }

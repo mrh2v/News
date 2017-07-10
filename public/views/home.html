@@ -35,18 +35,21 @@
     <div id="line-bar">
     </div>
     <ul class="nav nav-pills" id="bar-chude">
-      <li role="presentation" ng-repeat="dm in showDanhMuc">
+      <li role="presentation" ng-style="{'background': !danhMucActive ? 'burlywood' : '' }" ng-click="changeDanhMuc()">
+        <a><i class="glyphicon glyphicon-home"></i></a>
+      </li>
+      <li role="presentation" ng-repeat="dm in showDanhMuc" ng-style="{'background-color': danhMucActive == dm.ID ? 'burlywood' : ''}" ng-click="changeDanhMuc(dm.ID)">
         <a ng-bind="dm.TEN_NHOM"></a>
       </li>
-      <li role="presentation" uib-dropdown is-open="openDm" uib-dropdown-toggle><a>Khác</a>
+      <li role="presentation" uib-dropdown is-open="openDm" uib-dropdown-toggle ng-style="{'background': danhMucActive === 'ok' ? 'burlywood' : '' }"><a>Khác</a>
         <ul class="dropdown-menu ul-cus" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-          <li role="menuitem" ng-repeat="dm in hideDanhMuc">
+          <li role="menuitem" ng-repeat="dm in hideDanhMuc" ng-click="changeDanhMuc(dm.ID, true)">
             <a ng-bind="dm.TEN_NHOM"></a>
           </li>
         </ul>
       </li>
     </ul>
-    <div clas="row">
+    <div clas="row" ng-if="!loadHome">
       <div class="col-md-12">
         <div class="col-md-9">
           <b style="color: orange">TIN TỨC MỚI  </b>
@@ -55,67 +58,69 @@
       </div>
       <div class="col-md-6 new-left" style="border: 1px solid #ededed;">
         <div class="col-md-12" style="border-bottom: 1px solid #ededed;">
-          <img width="100%" height="300" ng-src="{{data[0].ANH_TD}}" style="margin-top: 1%;">
+          <img width="100%" height="300" class="tin-click" ng-src="{{data[0].ANH_TD}}" style="margin-top: 1%;" ng-click="detailTin(data[0])">
           <h4>
-            <b ng-bind="data[0].TIEU_DE"></b>
+            <b ng-bind="data[0].TIEU_DE" ng-click="detailTin(data[0])" class="tin-click"></b>
           </h4>
           <div ng-bind="data[0].NOI_DUNG_TT"></div>
         </div>
         <div class="col-md-12" style="margin-top: 1%;">
           <div class="col-md-6 text-center">
-            <img width="100%" height="150" ng-src="{{data[1].ANH_TD}}">
+            <img width="100%" height="150" ng-src="{{data[1].ANH_TD}}" class="tin-click" ng-click="detailTin(data[1])">
             <h5 class="text-left">
-              <b ng-bind="data[1].TIEU_DE"></b>
+              <b ng-bind="data[1].TIEU_DE" class="tin-click" ng-click="detailTin(data[1])"></b>
             </h5>
           </div>
           <div class="col-md-6 text-center">
-            <img width="100%" height="150" ng-src="{{data[2].ANH_TD}}">
+            <img width="100%" height="150" class="tin-click" ng-src="{{data[2].ANH_TD}}" ng-click="detailTin(data[2])">
             <h5 class="text-left">
-              <b ng-bind="data[2].TIEU_DE"></b>
+              <b ng-bind="data[2].TIEU_DE" class="tin-click" ng-click="detailTin(data[2])"></b>
             </h5>
           </div>
         </div>
       </div>
       <div class="col-md-3 new-left new-left-over" style="border: 1px solid #ededed;">
         <div ng-repeat="tin in data" ng-if="$index > 2">
-          <img width="100%" height="150" ng-src="{{tin.ANH_TD}}" ng-if="$index < 4" style="margin-top: 2%;">
-          <div><b ng-bind="tin.TIEU_DE"></b></div>
+          <img width="100%" height="150" class="tin-click" ng-src="{{tin.ANH_TD}}" ng-if="$index < 4" style="margin-top: 2%;" ng-click="detailTin(tin)">
+          <div><b ng-bind="tin.TIEU_DE" ng-click="detailTin(tin)" class="tin-click"></b></div>
           <hr class="hr-cus" />
         </div>
       </div>
       <div class="col-md-3 new-left" style="border: 1px solid #ededed;">
       </div>
-      <span>
-        <div style="height: 1px; background: green; margin-top: 1%;" class="col-md-12"></div>
+      <div ng-repeat="data in dataTinNhom" style="height: 100px;">
+        <!-- <div style="height: 1px; background: green; margin-top: 2%;" class="col-md-12"></div> -->
+        <div style="width: 100%;">
+          <hr/>
+        </div>
         <div class="col-md-12" style="border-bottom: 1px solid #ededed; margin-top: 1%; margin-bottom: 1%;">
-          <b style="color: blue;">
-            Thế giới
+          <b style="color: blue;" ng-bind="data.TEN_NHOM">
           </b>
         </div>
         <div class="col-md-12">
-          <div class="col-md-4">
-            <label ng-bind="data[0].TIEU_DE"></label>
-              <div style="width: 50%; float: left;">
-                <img ng-src="{{data[0].ANH_TD}}" height="120" width="140">
-              </div>
-            <div style="width: 49%; float: right;"" ng-bind="data[0].NOI_DUNG_TT"></div>
+          <div class="col-md-4" ng-repeat="tin in data.TINTUC | limitTo: 1 : 0 ">
+            <label ng-bind="tin.TIEU_DE" ng-click="detailTin(tin)" class="tin-click"></label>
+            <div style="width: 50%; float: left;">
+              <img ng-src="{{tin.ANH_TD}}" height="120" width="140" ng-click="detailTin(tin)" class="tin-click">
+            </div>
+            <div style="width: 49%; float: right;" " ng-bind="tin.NOI_DUNG_TT"></div>
           </div>
-          <div class="col-md-4">
-            <label ng-bind="data[0].TIEU_DE"></label>
-              <div style="width: 50%; float: left;">
-                <img ng-src="{{data[0].ANH_TD}}" height="120" width="140">
+          <div class="col-md-4 " ng-repeat="tin in data.TINTUC | limitTo: 1 : 1 ">
+            <label ng-bind="tin.TIEU_DE" ng-click="detailTin(tin)" class="tin-click"></label>
+              <div style="width: 50%; float: left; ">
+                <img ng-src="{{tin.ANH_TD}} " height="120" width="140" ng-click="detailTin(tin)" class="tin-click">
               </div>
-            <div style="width: 49%; float: right;"" ng-bind="data[0].NOI_DUNG_TT"></div>
+            <div style="width: 49%; float: right; "" ng-bind="tin.NOI_DUNG_TT"></div>
           </div>
-          <div class="col-md-4">
-            <div ng-repeat="tin in data" ng-if="$index < 4" style="padding-bottom: 2%;">
-              <b ng-bind="tin.TIEU_DE"></b>
+          <div class="col-md-4" ng-repeat="tin in data.TINTUC | limitTo: 6 : 3">
+            <div style="padding-bottom: 2%;">
+              <b ng-bind="tin.TIEU_DE" ng-click="detailTin(tin)" class="tin-click"></b>
             </div>
           </div>
         </div>
-      </span>
+      </div>
     </div>
-    <div class="row" id="ui-view">
+    <div class="row" id="ui-view" ng-if="loadHome">
       <ui-view></ui-view>
     </div>
   </div>
