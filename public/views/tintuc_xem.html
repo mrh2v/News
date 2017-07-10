@@ -12,6 +12,9 @@
 <div class="col-md-10 col-md-offset-1" style="margin-top: 2%;border-bottom: 1px solid gainsboro;">
   <div ng-bind-html="tin.NOI_DUNG"></div>
 </div>
+<div class="col-md-11 text-right">
+  <i>{{ tin.NGUOI_DANG && tin.NGUOI_DANG.TEN_HIEN_THI ? tin.NGUOI_DANG.TEN_HIEN_THI : tin.NGUOI_DANG.HO_TEN ? tin.NGUOI_DANG.HO_TEN : ten.NGUOI_DANG.TEN_DANG_NHAP }}</i>
+</div>
 <br/>
 <div class="col-md-10 col-md-offset-1" style="margin-top: 2%;" ng-if="tin">
   <div class="col-md-12" style="border-bottom: 3px solid #FFF;background: #f7f7f7">
@@ -30,7 +33,7 @@
 </div>
 <div class="col-md-10 col-md-offset-1" ng-if="tin">
   <h4 style="color: blue;">
-    Ý KIẾN BẠN ĐỌC (4)
+    Ý KIẾN BẠN ĐỌC ({{slBinhLuan}})
   </h4>
   <div class="col-md-12" ng-repeat="bl in binhluans" style="border-bottom: 1px solid #d6c1c1; margin-bottom: 1%;">
     <div class="col-md-1">
@@ -44,5 +47,8 @@
       </div>
       <i style="float: right;font-size: small">{{bl.THOI_GIAN | date: ' HH:mm dd/MM/yyyy' }}</i>
     </div>
+  </div>
+  <div ng-if="slBinhLuan > binhluans.length" style="height: 30px; margin-top: 1%; background-color: gainsboro;" class=" col-md-8 col-md-offset-2 text-center">
+    <div style="padding-top: 1%;"><b style="color:#3939a9;cursor: pointer;" ng-click="callBinhLuan()">Xem thêm bình luận</b></div>
   </div>
 </div>

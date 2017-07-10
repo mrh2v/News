@@ -87,6 +87,9 @@
         </div>
       </div>
       <div class="col-md-3 new-left" style="border: 1px solid #ededed;">
+        <div class="col-md-12" style="margin-top: 2%; border-bottom: 1px solid #ededed; height: 60px;" ng-repeat="tin in tinViews">
+          <b ng-bind="tin.TIEU_DE" style="color: brown;cursor: pointer;" ng-click="detailTin(tin)"></b> <span style="float: right;color: cadetblue;"><i class="glyphicon glyphicon-eye-open"></i> {{tin.SO_LAN_XEM}}</span>
+        </div>
       </div>
       <div ng-repeat="data in dataTinNhom" style="height: 100px;">
         <!-- <div style="height: 1px; background: green; margin-top: 2%;" class="col-md-12"></div> -->
@@ -103,12 +106,12 @@
             <div style="width: 50%; float: left;">
               <img ng-src="{{tin.ANH_TD}}" height="120" width="140" ng-click="detailTin(tin)" class="tin-click">
             </div>
-            <div style="width: 49%; float: right;" " ng-bind="tin.NOI_DUNG_TT"></div>
+            <div style="width: 49%; float: right;" " ng-bind="tin.NOI_DUNG_TT "></div>
           </div>
           <div class="col-md-4 " ng-repeat="tin in data.TINTUC | limitTo: 1 : 1 ">
-            <label ng-bind="tin.TIEU_DE" ng-click="detailTin(tin)" class="tin-click"></label>
+            <label ng-bind="tin.TIEU_DE " ng-click="detailTin(tin) " class="tin-click "></label>
               <div style="width: 50%; float: left; ">
-                <img ng-src="{{tin.ANH_TD}} " height="120" width="140" ng-click="detailTin(tin)" class="tin-click">
+                <img ng-src="{{tin.ANH_TD}} " height="120 " width="140 " ng-click="detailTin(tin) " class="tin-click ">
               </div>
             <div style="width: 49%; float: right; "" ng-bind="tin.NOI_DUNG_TT"></div>
           </div>

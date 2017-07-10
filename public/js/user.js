@@ -1,4 +1,5 @@
 angular.module("appTinTuc").controller("userDsCtrl", function($scope, $rootScope, $state, toastr, connect) {
+  $rootScope.toState = $state.current.name;
   function layDuLieu(offset, limit) {
     var ob = {
       offset: offset,
@@ -68,7 +69,7 @@ angular.module("appTinTuc").controller("userCreateCtrl", function($scope, $rootS
     GIOI_TINH: "1",
     QUYEN: "3"
   }
-
+  $rootScope.toState = $state.current.name;
   $scope.upload = function(file) {
     if (file) {
       var reader = new FileReader();
@@ -124,6 +125,7 @@ angular.module("appTinTuc").controller("userCreateCtrl", function($scope, $rootS
   }
 })
 angular.module("appTinTuc").controller('ttcnCtrl', function($timeout, $state, $rootScope, $scope, connect, toastr, $filter, $interval) {
+  $rootScope.toState = $state.current.name;
   if ($rootScope.user && $rootScope.user.id) {
     connect.get("/user/get_by_id/" + $rootScope.user.id, null, function(res) {
       if (res && res.ID) {
@@ -186,6 +188,7 @@ angular.module("appTinTuc").controller('ttcnCtrl', function($timeout, $state, $r
 
 angular.module("appTinTuc").controller('userTkCtrl', function($timeout, $state, $rootScope, $scope, connect, toastr, $filter, $interval) {
   var user = this;
+  $rootScope.toState = $state.current.name;
   if ($rootScope.user) {
     $scope.tk = { TEN_DANG_NHAP: $rootScope.user.username };
   }

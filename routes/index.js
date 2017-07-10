@@ -18,8 +18,29 @@ var user = sequelize.import('../models/user.js');
 tintuc.belongsTo(nhom, { foreignKey: 'ID_LOAI_TIN', as: "NHOM" });
 tintuc.belongsTo(user, { foreignKey: 'ID_NGUOI_DANG', as: "NGUOI_DANG" });
 binhluan.belongsTo(tintuc, { foreignKey: 'ID_TIN', as: "TINTUC" });
-binhluan.belongsTo(user, { foreignKey: 'ID_USER', as : "USER"});
+binhluan.belongsTo(user, { foreignKey: 'ID_USER', as: "USER" });
 
+
+
+router.get("/tintuc/get_tin_desc_xem", function(req, res, next) {
+  var loaitin = req.query.loaitin;
+  var dk = {
+    offset: 0,
+    limit: 10,
+    order: [
+      ["SO_LAN_XEM", "DESC"]
+    ],
+    attributes: ["ID", "TIEU_DE", "NOI_DUNG_TT", "THOI_GIAN", "ID_LOAI_TIN", "SO_LAN_XEM"]
+  }
+  if (loaitin) {
+    dk.where = {
+      ID_LOAI_TIN: loaitin
+    }
+  }
+  tintuc.findAll(dk).then(function(tins) {
+    res.send(tins);
+  }).catch(next)
+})
 
 router.get("/trang-chu/get-tin", function(req, res, next) {
   nhom.findAll({
@@ -61,14 +82,26 @@ router.get("/trang-chu/get-tin", function(req, res, next) {
 
 
 router.get('/tintuc/get_new', function(req, res, next) {
-  tintuc.findAll({
+  var limit = req.query.limit;
+  if (!limit || isNaN(parseInt(limit))) {
+    limit = 20;
+  }
+  var loaitin = req.query.loaitin;
+  var dk = {
     order: [
       ["THOI_GIAN", "DESC"]
     ],
     offset: 0,
-    limit: 20,
+    limit: limit,
     attributes: ['ID', 'TIEU_DE', 'NOI_DUNG_TT', 'THOI_GIAN', 'ANH_TD', "ID_LOAI_TIN"],
-  }).then(function(results) {
+  }
+  if (loaitin) {
+    dk.where = {
+      ID_LOAI_TIN: loaitin
+    };
+    dk.include= [{model: nhom, as : "NHOM", attributes: ["TEN_NHOM"] }]
+  }
+  tintuc.findAll(dk).then(function(results) {
     res.send(results);
   }).catch(next);
 })
@@ -79,7 +112,10 @@ router.get('/tintuc/get_by_id/:id', function(req, res, next) {
   tintuc.findOne({
     where: {
       ID: id
-    }
+    },
+    include: [
+      { model: user, as: "NGUOI_DANG", attributes: ['HO_TEN', 'TEN_HIEN_THI', 'TEN_DANG_NHAP'] }
+    ]
   }).then(function(results) {
     var ob = {
       ID: id,
@@ -311,6 +347,7 @@ router.get('/binhluan/get_by_tin/:id', function(req, res, next) {
   var id = req.params.id;
   var offset = req.query.offset;
   var limit = req.query.limit;
+  var kq = {};
   var dk = {
     order: [
       ["THOI_GIAN", "DESC"]
@@ -328,9 +365,18 @@ router.get('/binhluan/get_by_tin/:id', function(req, res, next) {
     dk.offset = offset;
     dk.limit = limit;
   }
-  console.log(dk)
-  binhluan.findAll(dk).then(function(results) {
-    res.send(results);
+  binhluan.count({
+    where: {
+      ID_TIN: id
+    }
+  }).then(function(socm) {
+    binhluan.findAll(dk).then(function(results) {
+      var kq = {
+        length: socm,
+        data: results
+      }
+      res.send(kq);
+    }).catch(next);
   }).catch(next);
 })
 

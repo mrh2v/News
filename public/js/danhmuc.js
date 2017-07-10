@@ -1,6 +1,6 @@
 angular.module("appTinTuc").controller("danhMucCtrl", function($scope, $rootScope, $state, connect, toastr) {
   var dm = this;
-
+  $rootScope.toState = $state.current.name;
   function layDuLieu(offset, limit) {
     var ob = {
       offset: offset,

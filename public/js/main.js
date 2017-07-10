@@ -2,6 +2,7 @@ angular.module("appTinTuc").controller('mainCtrl', function($scope, $rootScope, 
   $scope.goHome = function() {
     $state.go('home');
   };
+  $rootScope.toState = $state.current.name;
   connect.get('/nhom/get_all', null, function(data) {
     if (data && angular.isArray(data)) {
       $scope.showDanhMuc = [];
@@ -15,7 +16,6 @@ angular.module("appTinTuc").controller('mainCtrl', function($scope, $rootScope, 
       }
     }
   })
-  console.log($state.current)
   if ($state.current.name == "home") {
     connect.get("/tintuc/get_new", null, function(data) {
       if (data && angular.isArray(data)) {
@@ -27,6 +27,11 @@ angular.module("appTinTuc").controller('mainCtrl', function($scope, $rootScope, 
         $scope.dataTinNhom = angular.copy(data);
       }
     })
+    connect.get("/tintuc/get_tin_desc_xem", null, function(data){
+      if(data && angular.isArray(data)){
+        $scope.tinViews = data;
+      }
+    })
     $scope.detailTin = function(data) {
       $rootScope.danhMucActive = data.ID_LOAI_TIN;
       $scope.loadHome = true;
@@ -35,14 +40,19 @@ angular.module("appTinTuc").controller('mainCtrl', function($scope, $rootScope, 
   } else {
     $scope.loadHome = true;
   }
-  $scope.changeDanhMuc = function(id, check){
-    if(check){
+  $scope.changeDanhMuc = function(id, check) {
+    if (check) {
       $rootScope.danhMucActive = "ok";
-    }else{
+       $state.go("home.tinDanhMuc", {id: id});
+    } else {
       $rootScope.danhMucActive = id;
-      if(!id){
+      if (!id) {
         $scope.loadHome = false;
-        $state.go('home');
+        $state.go('home', null, {
+          reload: true
+        });
+      }else{
+        $state.go("home.tinDanhMuc", {id: id});
       }
     }
   }

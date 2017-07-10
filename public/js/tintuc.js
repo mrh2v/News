@@ -1,5 +1,6 @@
 angular.module("appTinTuc").controller("tintucDetail", function($uibModalInstance, body, $scope,  $sce) {
   $scope.body = body;
+  $rootScope.toState = $state.current.name;
   $scope.renderHTML = function(data){
     return $sce.trustAsHtml(data);
   }

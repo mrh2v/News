@@ -1,0 +1,29 @@
+<div>
+  <h1 ng-bind="nhom" style="font-size: -webkit-xxx-large;color: gray;"></h1>
+</div>
+<div class="col-md-12" style="border-bottom: 1px solid #eee;">
+  <div class="col-md-6" ng-repeat="tin in tintucs | limitTo: 2: 0">
+    <div class="col-md-6">
+      <img ng-src="{{tin.ANH_TD}}" height="200px" width="100%" class="tin-click" ng-click="detailTin(tin)">
+      <i style="margin-top: 1%;">{{tin.THOI_GIAN | date: "HH:mm dd/MM/yyyy"}}</i>
+    </div>
+    <div class="col-md-6">
+      <label ng-bind="tin.TIEU_DE" style="font-size: 24px; width: 100%;" class="tin-click" ng-click="detailTin(tin)"></label>
+      <i ng-bind="tin.NOI_DUNG_TT"></i>
+    </div>
+  </div>
+</div>
+<hr class="col-md-12" style="background-color: green;" />
+<div style="margin-bottom: 1%;">
+  <b style="color:  blue;">Tin tiếp theo</b>
+</div>
+<div class="col-md-12" ng-repeat="tin in tintucs.slice(2,tintucs.length)" style="margin-top: 1%;">
+	<i style="margin-top: 1%;margin-left: 1%;">{{tin.THOI_GIAN | date: "HH:mm dd/MM/yyyy"}}</i>
+	<div class="col-md-4">
+		<img ng-src="{{tin.ANH_TD}}" width="100%" height="200px" class="tin-click" ng-click="detailTin(tin)"/>
+	</div>
+	<div class="col-md-8">
+		<label style="font-size: 24px; width: 100%;" ng-bind="tin.TIEU_DE" class="tin-click" ng-click="detailTin(tin)"></label>
+		<i ng-bind="tin.NOI_DUNG_TT"></i>
+	</div>
+</div>

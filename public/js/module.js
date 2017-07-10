@@ -87,23 +87,37 @@ app.config(function($stateProvider, $locationProvider, $qProvider, toastrConfig,
     })
 
   /*trang chu*/
-  .state('home', {
-    url: '/trang-chu',
-    templateUrl: 'views/home.html',
-    controller: "mainCtrl"
-  })
-  .state('home.xemTintuc', {
+    .state('home', {
+      url: '/trang-chu',
+      templateUrl: 'views/home.html',
+      controller: "mainCtrl"
+    })
+    .state('home.xemTintuc', {
       url: '/tin-tuc/noi-dung/:id',
       templateUrl: 'views/tintuc_xem.html',
       controller: "tintucCtrl",
       controllerAs: "tt"
     })
+    .state('home.tinDanhMuc', {
+      url: '/tin-tuc/danh-muc/:id',
+      templateUrl: 'views/danhmuc_xemtin.html',
+      controller: "tinDanhMucCtrl",
+      controllerAs: "tt"
+    })
 });
 
-app.run(function($rootScope, $state, $uibModal) {
-  // $state.go('admin');
+app.run(function($rootScope, $state, $uibModal, $timeout) {
   $rootScope.danhMucActive = null;
-
+  $rootScope.$on('$stateChangeStart',
+    function(event, toState, toParams, fromState, fromParams) {
+      $timeout(function() {
+        if ($rootScope.toState != toState.name) {
+          $state.go(toState.name, toParams, {
+            reload: true
+          });
+        }
+      }, 100)
+    })
   if (typeof(Storage) !== "undefined" && localStorage.id) {
     $rootScope.user = {
       id: localStorage.id,
@@ -159,6 +173,7 @@ app.run(function($rootScope, $state, $uibModal) {
       localStorage.clear();
     }
   }
+  // $state.go("home");
 });
 
 app.factory("connect", function($http, $uibModal) {

@@ -26,6 +26,7 @@ angular.module("appTinTuc").controller('quanliCtrl', [ "$state", "$rootScope", "
   $scope.goCreateTT = function(){
     $state.go("admin.creattt");
   }
+  $rootScope.toState = $state.current.name;
 }])
 
 
