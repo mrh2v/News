@@ -193,9 +193,9 @@ app.run(function($rootScope, $state, $uibModal, $timeout) {
   $rootScope.thu = doiNgay(moment().format('dddd'));
   $rootScope.ngay = moment().format("DD/MM/YYYY");
 
-  $rootScope.goTimKiem = function(tk){
-    if(tk){
-      $state.go("home.timkiem", {data: tk})
+  $rootScope.goTimKiem = function(tk) {
+    if (tk) {
+      $state.go("home.timkiem", { data: tk })
     }
   }
   $rootScope.goBaiViet = function() {
@@ -241,7 +241,9 @@ app.run(function($rootScope, $state, $uibModal, $timeout) {
   if (!$rootScope.user && $state.current.name.indexOf("admin") > -1) {
     $state.go('home');
   }
-
+  if ($state.current.name == "" || !$state.current.name) {
+    $state.go('home');
+  }
 });
 
 app.factory("connect", function($http, $uibModal) {

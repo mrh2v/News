@@ -2,7 +2,24 @@
   <div class="text-center">
     <h4>DANH SÁCH TIN TỨC</h4>
   </div>
-  <table class="table table-bordered">
+  <div style="margin-top: 2%; margin-bottom: 2%;" class="col-md-12">
+    <div class="col-md-3">
+      <select class="form-control" ng-model="nhom">
+        <option value selected>Chọn danh mục</option>
+        <option ng-repeat="nhom in nhoms" value="{{nhom.ID}}">{{nhom.TEN_NHOM}}</option>
+      </select>
+    </div>
+    <div class="col-md-3" ng-show="activeFull">
+      <select class="form-control" ng-model="tacgia">
+        <option value selected> Chọn tác giả</option>
+        <option ng-repeat="tg in nguois" value="{{tg.ID}}">{{tg.TEN_DANG_NHAP}}</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-warning" ng-click="searchDS()"><i class="glyphicon glyphicon-search"></i></button>
+    </div>
+  </div>
+  <table class="table table-bordered" ng-if="dataDs.length > 0">
     <thead>
       <tr>
         <th class="text-center">Tiêu đề</th>
@@ -27,7 +44,7 @@
       </tr>
     </tbody>
   </table>
-  <div class="text-right">
+  <div class="text-right" ng-if="dataDs.length > 0">
     <nav aria-label="Page navigation">
       <ul class="pagination">
         <li>
@@ -47,5 +64,8 @@
         </li>
       </ul>
     </nav>
+  </div>
+  <div class="col-md-12 alert alert-info" ng-if="dataDs.length == 0">
+    <i>Không có bài viết cho tìm kiếm này</i>
   </div>
 </div>

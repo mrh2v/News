@@ -210,6 +210,7 @@ router.get('/tintuc/get_offset', function(req, res, next) {
   var offset = req.query.offset;
   var limit = req.query.limit;
   var id = req.query.id;
+  var id_loai_tin = req.query.nhom;
   offset = parseInt(offset) < 0 ? 0 : parseInt(offset);
   limit = parseInt(limit);
   if (!req.query.offset || !req.query.limit || isNaN(offset) || isNaN(limit) || limit > 100) {
@@ -230,13 +231,21 @@ router.get('/tintuc/get_offset', function(req, res, next) {
   var dk1 = {};
   if (id) {
     dk.where = {
-      ID_NGUOI_DANG: id
+      ID_NGUOI_DANG: id,
+      ID_LOAI_TIN: 4
     }
     dk1 = {
       where: {
-        ID_NGUOI_DANG: id
-      }
+        ID_NGUOI_DANG: id,
+        ID_LOAI_TIN: 4
+      },
     }
+  }
+  if (id_loai_tin) {
+    if (!dk.where) dk.where = {};
+    dk.where.ID_LOAI_TIN = id_loai_tin;
+    if (!dk1.where) dk.where = {};
+    dk1.where.ID_LOAI_TIN = id_loai_tin;
   }
   tintuc.count(dk1).then(function(size) {
     tintuc.findAll(dk).then(function(results) {
@@ -308,7 +317,9 @@ router.post("/hethong/change_password", function(req, res, next) {
 
 /*USER*/
 router.get('/user/get_all', function(req, res, next) {
-  user.findAll().then(function(results) {
+  user.findAll({
+    attributes: ["ID", "TEN_DANG_NHAP"]
+  }).then(function(results) {
     res.send(results);
   }).catch(next);
 })

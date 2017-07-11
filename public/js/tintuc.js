@@ -14,8 +14,9 @@ angular.module("appTinTuc").controller("tintucDs", function($scope, $rootScope, 
     var ob = {
       offset: offset,
       limit: limit,
-      id: id
-    }
+      id: id,
+      nhom: $scope.nhom || null
+    };
     connect.get("/tintuc/get_offset", ob, function(data) {
       if (data && data.data) {
         renderData(data.data, offset);
@@ -23,6 +24,28 @@ angular.module("appTinTuc").controller("tintucDs", function($scope, $rootScope, 
       }
     })
   }
+
+  if ($rootScope.activeFull) {
+    connect.get("/user/get_all", null, function(data) {
+      if (data && angular.isArray(data)) {
+        $scope.nguois = data;
+      }
+    })
+  }
+
+  $scope.searchDS = function(nhom) {
+    if ($rootScope.activeFull) {
+      layDuLieu(0, 6, $scope.tacgia);
+    } else {
+      layDuLieu(0, 6, $rootScope.user.id);
+    }
+  }
+
+  connect.get("/nhom/get_all", null, function(data) {
+    if (data && angular.isArray(data)) {
+      $scope.nhoms = data;
+    }
+  })
 
   function renderData(data, dem) {
     for (var i in data) {

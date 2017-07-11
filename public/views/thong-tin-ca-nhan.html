@@ -12,53 +12,55 @@
     <label style="padding-left: 17%;">Ảnh đại diện</label>
   </div>
   <div class="col-md-9">
-    <div class="col-md-12 ttcn">
-      <label class="col-md-4">Họ và tên :</label>
-      <div class="col-md-7">
-        <input type="text" ng-model="tk.HO_TEN" class="form-control" ng-disabled="!editing">
+    <form name="formTTCN">
+      <div class="col-md-12 ttcn">
+        <label class="col-md-4">Họ và tên :(<span style="color: red;">*</span>)</label>
+        <div class="col-md-7">
+          <input type="text" ng-model="tk.HO_TEN" class="form-control" ng-disabled="!editing" required="true">
+        </div>
       </div>
-    </div>
-    <div class="col-md-12 ttcn">
-      <label class="col-md-4">Tên hiển thị :</label>
-      <div class="col-md-7">
-        <input type="text" ng-model="tk.TEN_HIEN_THI" class="form-control" ng-disabled="!editing">
+      <div class="col-md-12 ttcn">
+        <label class="col-md-4">Tên hiển thị :(<span style="color: red;">*</span>)</label>
+        <div class="col-md-7">
+          <input type="text" ng-model="tk.TEN_HIEN_THI" class="form-control" ng-disabled="!editing">
+        </div>
       </div>
-    </div>
-    <div class="col-md-12 ttcn">
-      <label class="col-md-4">Giới tính :</label>
-      <div class="col-md-7">
-        <select ng-model="tk.GIOI_TINH" class="form-control" ng-disabled="!editing">
-          <option value selected>Chọn giới tính</option>
-          <option value="1">Nam</option>
-          <option value="0">Nữ</option>
-        </select>
+      <div class="col-md-12 ttcn">
+        <label class="col-md-4">Giới tính :(<span style="color: red;">*</span>)</label>
+        <div class="col-md-7">
+          <select ng-model="tk.GIOI_TINH" class="form-control" ng-disabled="!editing" required="true">
+            <option value selected>Chọn giới tính</option>
+            <option value="1">Nam</option>
+            <option value="0">Nữ</option>
+          </select>
+        </div>
       </div>
-    </div>
-    <div class="col-md-12 ttcn">
-      <label class="col-md-4">Số CMND :</label>
-      <div class="col-md-7">
-        <input type="text" ng-model="tk.CMND" class="form-control" ng-disabled="!editing" pattern="[0-9]{9,13}">
+      <div class="col-md-12 ttcn">
+        <label class="col-md-4">Số CMND :</label>
+        <div class="col-md-7">
+          <input type="text" ng-model="tk.CMND" class="form-control" ng-disabled="!editing" pattern="[0-9]{9,13}">
+        </div>
       </div>
-    </div>
-    <div class="col-md-12 ttcn">
-      <label class="col-md-4">Điện thoại liên lạc:</label>
-      <div class="col-md-7">
-        <input type="text" ng-model="tk.SDT" class="form-control" ng-disabled="!editing" pattern="[0-9]{10,11}">
+      <div class="col-md-12 ttcn">
+        <label class="col-md-4">Điện thoại liên lạc:</label>
+        <div class="col-md-7">
+          <input type="text" ng-model="tk.SDT" class="form-control" ng-disabled="!editing" pattern="[0-9]{10,11}">
+        </div>
       </div>
-    </div>
-    <div class="col-md-12 ttcn">
-      <label class="col-md-4">Chức vụ:</label>
-      <div class="col-md-7">
-        <span>{{tk.chuc_vu}}</span>
+      <div class="col-md-12 ttcn">
+        <label class="col-md-4">Chức vụ:</label>
+        <div class="col-md-7">
+          <span>{{tk.chuc_vu}}</span>
+        </div>
       </div>
-    </div>
-    <div class="col-md-12 ttcn">
-      <label class="col-md-4">Thời gian cập nhật:</label>
-      <div class="col-md-7">
-        <span ng-show="!editing">{{tk.tg}}</span>
-        <span ng-show="editing">{{time}}</span>
+      <div class="col-md-12 ttcn">
+        <label class="col-md-4">Thời gian cập nhật:</label>
+        <div class="col-md-7">
+          <span ng-show="!editing">{{tk.tg}}</span>
+          <span ng-show="editing">{{time}}</span>
+        </div>
       </div>
-    </div>
+    </form>
   </div>
   <div class="col-md-3">
     <div class="ttcn1">
@@ -68,7 +70,7 @@
       <button class="btn btn-info" ng-click="goMatKhau()"><i class="glyphicon glyphicon-warning-sign"></i> Đổi mật khẩu</button>
     </div>
     <div class="ttcn1" ng-show="editing">
-      <button class="btn btn-success" ng-click="luutk(tk)"><i class="glyphicon glyphicon-ok"></i> Lưu</button>
+      <button class="btn btn-success" ng-click="luutk(tk)" ng-disabled="formTTCN.$invalid"><i class="glyphicon glyphicon-ok"></i> Lưu</button>
     </div>
     <div class="ttcn1" ng-show="editing">
       <button class="btn btn-warning" ng-click="cancelEdit();"><i class="glyphicon glyphicon-remove"></i> Hủy</button>
