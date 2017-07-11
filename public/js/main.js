@@ -41,6 +41,7 @@ angular.module("appTinTuc").controller('mainCtrl', function($scope, $rootScope, 
     $scope.loadHome = true;
   }
   $scope.changeDanhMuc = function(id, check) {
+    $rootScope.timkiem = null;
     if (check) {
       $rootScope.danhMucActive = "ok";
        $state.go("home.tinDanhMuc", {id: id});

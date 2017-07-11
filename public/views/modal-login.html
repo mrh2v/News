@@ -16,7 +16,8 @@
       <input type="password" class="form-control" placeholder="Mật khẩu" ng-keypress="loginKey($event ,username, password)" ng-model="password">
     </div>
     <div class="text-center">
-      <i class="fa fa-spin fa-pulse fa-spinner fa-2x" style="color: green"></i>
+      <i class="fa fa-spin fa-pulse fa-spinner fa-2x" style="color: green" ng-if="loging"></i>
+      <i ng-bind="error" ng-if="error" style="color: red;"></i>
     </div>
   </div>
 </div>

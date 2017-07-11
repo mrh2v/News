@@ -6,29 +6,29 @@
   <div class="text-center">
     <i style="color:red;" class="fa fa-spin fa-pulse fa-spinner fa-2x" ng-if="dm.loading"></i>
   </div>
-  <form class="col-md-10 col-md-offset-1" name="formUser">
+  <form class="col-md-10 col-md-offset-1" name="user.formUser">
     <div class="text-center col-md-12 ">
-      <div style="width: 102px; height: 102px; border: 1px solid; float: right;" ngf-select="upload($file)" ngf-drop="upload($file)" ngf-resize="{width: 100, height: 100}" >
+      <div style="width: 102px; height: 102px; border: 1px solid; float: right;" ngf-select="upload($file)" ngf-drop="upload($file)" ngf-resize="{width: 100, height: 100}">
         <i ng-if="!avatar">Ảnh đại diện</i>
-        <img ng-src="{{avatar}}" ng-if="avatar"/>
+        <img ng-src="{{avatar}}" ng-if="avatar" />
       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
-        <label>Tên đăng nhập</label>
-        <input type="text" class="form-control" placeholder="Nhập tên đăng nhập" ng-model="tk.TEN_DANG_NHAP" required>
+        <label>Tên đăng nhập</label> (<span style="color: red;">*</span>) <i ng-if="!tenError"> Tối thiểu 5 kí tự</i> <span style="color: red" ng-if="!checking && tenError">Tên đăng nhập đã được sử dụng</span> <i class="fa fa-spin fa-pulse fa-spinner" style="color: green" ng-if="checking"></i>
+        <input type="text" class="form-control" ng-blur="checkTen(tk.TEN_DANG_NHAP)" placeholder="Nhập tên đăng nhập" ng-model="tk.TEN_DANG_NHAP" minlength="5" maxlength="50" required>
       </div>
       <div class="form-group">
-        <label>Mật khẩu</label>
-        <input type="password" class="form-control" placeholder="Nhập mật khẩu" ng-model="tk.MAT_KHAU" required>
+        <label>Mật khẩu</label> (<span style="color: red;">*</span>)<i> Tối thiểu 6 kí tự</i>
+        <input type="password" class="form-control" minlength="6" maxlength="50" placeholder="Nhập mật khẩu" ng-model="tk.MAT_KHAU" required>
       </div>
       <div class="form-group">
-        <label>Nhập lại mật khẩu</label>
-        <input type="password" class="form-control" placeholder="Nhập lại mật khẩu" ng-model="tk.mat_khau" required>
+        <label>Nhập lại mật khẩu</label> (<span style="color: red;">*</span>)
+        <input type="password" ng-style="{'border-color' : tk.MAT_KHAU != tk.mat_khau ? 'red' : ''}" class="form-control" placeholder="Nhập lại mật khẩu" ng-model="tk.mat_khau" minlength="6" maxlength="50" required>
       </div>
       <div class="form-group">
-        <label>Số CMND</label>
-        <input type="text" class="form-control" placeholder="Nhập số chứng minh nhân dân" pattern="[0-9]{9,13}" ng-model="tk.CMND" required>
+        <label>Số CMND</label> <i ng-if="user.formUser.cmnd.$error.pattern" style="color:red;"> Không đúng định dạng số chứng minh nhân dân</i>
+        <input type="text" name="cmnd" class="form-control" placeholder="Nhập số chứng minh nhân dân" pattern="[0-9]{9,13}" ng-model="tk.CMND">
       </div>
       <div style="margin-left: 2%;">
         <label>Giới tính</label>
@@ -38,31 +38,31 @@
     </div>
     <div class="col-md-6">
       <div class="form-group">
+        <label>Họ và tên</label> (<span style="color: red;">*</span>) <i> Tối thiểu 6 kí tự</i>
+        <input type="text" class="form-control" placeholder="Nhập tên nhóm tin tức" minlength="6" maxlength="50" ng-model="tk.HO_TEN" required>
+      </div>
+      <div class="form-group">
         <label>Tên hiển thị</label>
-        <input type="text" class="form-control" placeholder="Nhập thứ tự hiển thị" ng-model="tk.TEN_HIEN_THI" required>
+        <input type="text" class="form-control" placeholder="Nhập thứ tự hiển thị" ng-model="tk.TEN_HIEN_THI" maxlength="20" >
       </div>
       <div class="form-group">
-        <label>Họ và tên</label>
-        <input type="text" class="form-control" placeholder="Nhập tên nhóm tin tức" ng-model="tk.HO_TEN" required>
+        <label>Số điện thoại</label> <i ng-if="user.formUser.sdt.$error.pattern" style="color:red;"> Không đúng định dạng số điện thoại</i>
+        <input type="text" class="form-control" name="sdt" placeholder="Nhập số điện thoại" pattern="[0-9]{10,11}" ng-model="tk.SDT">
       </div>
       <div class="form-group">
-        <label>Số điện thoại</label>
-        <input type="text" class="form-control" placeholder="Nhập số điện thoại" pattern="[0-9]{10,11}" ng-model="tk.SDT">
-      </div>
-      <div class="form-group">
-        <label>Chức vụ</label>
-        <select ng-model="tk.QUYEN" class="form-control" required>
+        <label>Chức vụ</label> (<span style="color: red;">*</span>)
+        <select ng-model="tk.QUYEN" class="form-control" required> (<span style="color: red;">*</span>)
           <option value selected>Chọn chức vụ</option>
           <option value="1" selected>Admin</option>
           <option value="2" selected>Công tác viên</option>
           <option value="3" selected>Bạn đọc</option>
-          <option value="99" selected>Root</option>
+          <option value="99" selected ng-if="activeRoot">Root</option>
         </select>
       </div>
     </div>
     <div class="text-right">
-      <button type="submit" class="btn btn-success" ng-click="themtk(tk)" ng-disabled="dm.loading ||formUser.$invalid || tk.mat_khau != tk.MAT_KHAU" ng-if="!update">Thêm mới</button>
-      <button type="submit" class="btn btn-success" ng-click="suatk(tk)"  ng-if="update">Cập nhật</button>
+      <button type="submit" class="btn btn-success" ng-click="themtk(tk)" ng-disabled=" loading ||user.formUser.$invalid || tk.mat_khau != tk.MAT_KHAU || tenError" ng-if="!update">Thêm mới</button>
+      <button type="submit" class="btn btn-success" ng-click="suatk(tk)" ng-if="update">Cập nhật</button>
     </div>
   </form>
 </div>

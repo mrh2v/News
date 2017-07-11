@@ -1,0 +1,37 @@
+<div class="modal-header text-center" style="background-color: cadetblue;border-radius: 5px;">
+  <h3>ĐĂNG KÝ NHANH</h3>
+</div>
+<div class="modal-body">
+  <form name="formDangKy">
+    <div class="form-group">
+      <label>Họ và tên</label> (<span style="color: red;">*</span>) <i> Tối thiểu 6 kí tự</i>
+      <input type="text" class="form-control" placeholder="Nhập họ và tên" ng-model="tk.HO_TEN" maxlength="50" required="true">
+    </div>
+    <div class="form-group">
+      <label>Giới tính</label> (<span style="color: red;">*</span>)
+      <select class="form-control" ng-model="tk.GIOI_TINH">
+        <option value>Chọn giới tính</option>
+        <option value="1">Nam</option>
+        <option value="0">Nữ</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Tên đăng nhập</label> (<span style="color: red;">*</span>) <i ng-if="!tenError"> Tối thiểu 5 kí tự</i> <span style="color: red" ng-if="!checking && tenError">Tên đăng nhập đã được sử dụng</span> <i class="fa fa-spin fa-pulse fa-spinner" style="color: green" ng-if="checking"></i>
+      <input type="text" class="form-control" placeholder="Nhập tên đăng nhập" minlength="5" ng-blur="checkTen(tk.TEN_DANG_NHAP)" ng-model="tk.TEN_DANG_NHAP" maxlength="50" required="true">
+    </div>
+    <div class="form-group">
+      <label>Mật khẩu</label> (<span style="color: red;">*</span>)<i> Tối thiểu 6 kí tự</i>
+      <input type="password" class="form-control" placeholder="Nhập mật khẩu" ng-model="tk.MAT_KHAU" maxlength="50" minlength="6" required="true">
+    </div>
+    <div class="form-group">
+      <label>Nhập lại mật khẩu</label> (<span style="color: red;">*</span>)
+      <input type="password" class="form-control" ng-style="{'border-color' : tk.MAT_KHAU != tk.mat_khau ? 'red' : ''}" placeholder="Nhập lại mật khẩu" ng-model="tk.mat_khau" maxlength="50" required="true" minlength="6">
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-success" ng-click="dk(tk)" ng-disabled="formDangKy.$invalid || tk.MAT_KHAU != tk.mat_khau || tenError">
+    Đăng ký
+  </button>
+  <button class="btn btn-warning" ng-click="exitModal()">Hủy</button>
+</div>

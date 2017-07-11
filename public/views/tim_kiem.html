@@ -1,0 +1,21 @@
+<div style="margin-top: 2%;" class="col-md-12">
+  <i style="margin-right: 2%;">Kết quả tìm kiếm cho :</i>"<span ng-bind="timkiem" style="font-size: x-large; color: brown;"></span>"
+</div>
+<div class="col-md-12" ng-repeat="tin in tins" style="margin-bottom: 2%; border-bottom:  1px solid #eee;">
+  <div class="col-md-5">
+    <img ng-src="{{tin.ANH_TD}}" width="100%" height="250px" ng-click="detailTin(tin)" class="tin-click">
+    <i>{{tin.THOI_GIAN | date : 'HH:mm dd/MM/yyyy'}}</i>
+  </div>
+  <div class="col-md-5">
+    <label ng-bind="tin.TIEU_DE" style="width: 100%;" ng-click="detailTin(tin)" class="tin-click"></label>
+    <i ng-bind="tin.NOI_DUNG_TT"></i>
+  </div>
+  <div class="col-md-2">
+    <div>
+      Từ khóa: <i ng-bind="tin.TU_KHOA"></i>
+    </div>
+  </div>
+</div>
+<div ng-if="tins.length == 0" style="margin-top: 2%;" class="text-center">
+  <b>Rất tiếc, không thể tìm thấy kết quả mong muốn, vui lòng thay đổi từ khóa gần đúng</b>
+</div>

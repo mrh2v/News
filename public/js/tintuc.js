@@ -1,7 +1,6 @@
-angular.module("appTinTuc").controller("tintucDetail", function($uibModalInstance, body, $scope,  $sce) {
+angular.module("appTinTuc").controller("tintucDetailCtrl", function($uibModalInstance, body, $scope, $sce) {
   $scope.body = body;
-  $rootScope.toState = $state.current.name;
-  $scope.renderHTML = function(data){
+  $scope.renderHTML = function(data) {
     return $sce.trustAsHtml(data);
   }
   $scope.exitModal = function() {
@@ -9,15 +8,18 @@ angular.module("appTinTuc").controller("tintucDetail", function($uibModalInstanc
   }
 })
 angular.module("appTinTuc").controller("tintucDs", function($scope, $rootScope, $state, $timeout, connect, toastr, $filter) {
-  function layDuLieu(offset, limit) {
+  $rootScope.toState = $state.current.name;
+
+  function layDuLieu(offset, limit, id) {
     var ob = {
       offset: offset,
-      limit: limit
+      limit: limit,
+      id: id
     }
     connect.get("/tintuc/get_offset", ob, function(data) {
       if (data && data.data) {
         renderData(data.data, offset);
-        $scope.soTrang = Math.ceil(data.length / 5);
+        $scope.soTrang = Math.ceil(data.length / limit);
       }
     })
   }
@@ -45,7 +47,11 @@ angular.module("appTinTuc").controller("tintucDs", function($scope, $rootScope, 
   $scope.trangSelect = 1;
   $scope.selectTrang = function(so) {
     if ($scope.trangSelect !== so) {
-      layDuLieu((so - 1) * 5, 5);
+      if ($rootScope.activeFull) {
+        layDuLieu((so - 1) * 6, 6);
+      } else {
+        layDuLieu((so - 1) * 6, 6, $rootScope.user.id);
+      }
       $scope.trangSelect = so;
     }
   }
@@ -67,11 +73,16 @@ angular.module("appTinTuc").controller("tintucDs", function($scope, $rootScope, 
       }
     })
   }
-  layDuLieu(0, 5);
-})
-angular.module("appTinTuc").controller("tintucCreate", function( $scope, $rootScope, $state, connect, $timeout, $uibModal, toastr) {
-  var tt = this;
+  if ($rootScope.activeFull) {
+    layDuLieu(0, 6);
+  } else {
+    layDuLieu(0, 6, $rootScope.user.id);
+  }
 
+})
+angular.module("appTinTuc").controller("tintucCreate", function($scope, $rootScope, $state, connect, $timeout, toastr, $uibModal) {
+  var tt = this;
+  $rootScope.toState = $state.current.name;
   if ($state.params && $state.params.id) {
     $scope.update = true;
     connect.get('/tintuc/get_by_id/' + $state.params.id, null, function(data) {
@@ -86,7 +97,6 @@ angular.module("appTinTuc").controller("tintucCreate", function( $scope, $rootSc
       }
     })
   }
-
 
   $scope.files = [{}];
 
@@ -148,7 +158,7 @@ angular.module("appTinTuc").controller("tintucCreate", function( $scope, $rootSc
     var ob = $scope.files[index];
     ob.id = $rootScope.user.id;
     connect.post("/hethong/save_img", ob, function(cb) {
-      if (cb) {
+      if (cb && cb.status != 500) {
         $scope.files[index].url = cb;
         $scope.files.push({});
       } else {
@@ -157,37 +167,43 @@ angular.module("appTinTuc").controller("tintucCreate", function( $scope, $rootSc
     })
   }
   $scope.saveTintuc = function(tintuc) {
-    tintuc.NOI_DUNG = $scope.noidung;
-    tintuc.ANH_TD = $scope.tieudeAnh;
-    if (!$scope.update) {
-      tintuc.ID_NGUOI_DANG = $rootScope.user.id;
-      connect.post("/tintuc/create", tintuc, function(cb) {
-        if (cb && cb.ID) {
-          toastr.success('Lưu thông tin bài viết thành công!');
-          $state.reload();
-        } else {
-          toastr.error('Lưu thông tin bài viết thất bại!');
-        }
-      })
-    }else{
-      connect.post("/tintuc/update", tintuc, function(cb) {
-        if (cb && cb.ID) {
-          toastr.success('Cập nhật thông tin bài viết thành công!');
-          $state.reload();
-        } else {
-          toastr.error('Cập nhật thông tin bài viết thất bại!');
-        }
-      })
+    if ($scope.tieudeAnh) {
+      $scope.loading = true;
+      tintuc.NOI_DUNG = $scope.noidung;
+      tintuc.ANH_TD = $scope.tieudeAnh;
+      if (!$scope.update) {
+        tintuc.ID_NGUOI_DANG = $rootScope.user.id;
+        connect.post("/tintuc/create", tintuc, function(cb) {
+          if (cb && cb.ID) {
+            toastr.success('Lưu bài viết thành công!', "THÀNH CÔNG");
+            $state.reload();
+          } else {
+            toastr.error('Lưu bài viết thất bại!', "THẤT BẠI");
+          }
+          $scope.loading = false;
+        })
+      } else {
+        connect.post("/tintuc/update", tintuc, function(cb) {
+          if (cb && cb.ID) {
+            toastr.success('Cập nhật bài viết thành công!', "THÀNH CÔNG");
+            $state.reload();
+          } else {
+            toastr.error('Cập nhật bài viết thất bại!', "THẤT BẠI");
+          }
+          $scope.loading = false;
+        })
+      }
+    } else {
+      toastr.warning('Chưa có ảnh tiêu đề bài viết', "CẢNH BÁO");
     }
   }
-  $scope.detailTintuc = function(tintuc) {
+  $scope.xemTintuc = function(tintuc) {
+    if (!tintuc) tintuc = {}
     tintuc.NOI_DUNG = convertTAYouTubeMarkupToIframe($scope.noidung);
-    console.log(tintuc.NOI_DUNG)
     var modal = $uibModal.open({
       animation: true,
-      templateUrl: "/views/detail_tintuc.html",
-      controller: 'tintucDetail',
-      controllerAs: 'tt',
+      templateUrl: "/views/tintuc_xemtruoc.html",
+      controller: 'tintucDetailCtrl',
       size: 'lg',
       resolve: {
         body: tintuc

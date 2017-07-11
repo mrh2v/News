@@ -1,6 +1,6 @@
 angular.module("appTinTuc").controller('tintucCtrl', function($scope, $rootScope, $state, $sce, connect, $filter, toastr) {
   $scope.binhluans = [];
-  $scope.urlAvatar = "/avatar.gif";
+
   $rootScope.toState = $state.current.name;
   var tt = this;
   var slCall = 0;
@@ -9,7 +9,7 @@ angular.module("appTinTuc").controller('tintucCtrl', function($scope, $rootScope
       offset: 5 * slCall,
       limit: 5
     }
-    slCall ++;
+    slCall++;
     connect.get("/binhluan/get_by_tin/" + $state.params.id, ob, function(data) {
       if (data && data.data && angular.isArray(data.data)) {
         $scope.binhluans = $scope.binhluans.concat(data.data);
@@ -39,13 +39,15 @@ angular.module("appTinTuc").controller('tintucCtrl', function($scope, $rootScope
     }
     connect.post("/binhluan/create", ob, function(data) {
       if (data && data.ID) {
-        toastr.success("Gửi bình luận thành công !");
         if ($rootScope.user) {
-          data.USER.ANH = $rootScope.user.anh;
+          data.USER = {
+            ANH: $rootScope.user.anh
+          }
         }
         $scope.binhluans.unshift(data);
-        $scope.slBinhLuan ++;
+        $scope.slBinhLuan++;
         tt.binhluan.noidung = null;
+        toastr.success("Gửi bình luận thành công !");
       } else {
         toastr.error("Gửi bình luận thất bại !");
       }

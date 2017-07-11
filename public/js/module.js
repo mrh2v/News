@@ -87,7 +87,7 @@ app.config(function($stateProvider, $locationProvider, $qProvider, toastrConfig,
     })
 
   /*trang chu*/
-    .state('home', {
+  .state('home', {
       url: '/trang-chu',
       templateUrl: 'views/home.html',
       controller: "mainCtrl"
@@ -104,20 +104,55 @@ app.config(function($stateProvider, $locationProvider, $qProvider, toastrConfig,
       controller: "tinDanhMucCtrl",
       controllerAs: "tt"
     })
+    .state('home.timkiem', {
+      url: '/tin-tuc/tim-kiem/:data',
+      templateUrl: 'views/tim_kiem.html',
+      controller: "timkiemCtrl",
+      controllerAs: "tk"
+    })
 });
 
 app.run(function($rootScope, $state, $uibModal, $timeout) {
   $rootScope.danhMucActive = null;
+  $rootScope.urlAvatar = "/avatar.gif";
+  $rootScope.setPer = function(q) {
+    if (q == 99 || q == 1) {
+      $rootScope.activeFull = true;
+      if (q == 99) {
+        $rootScope.activeRoot = true;
+      }
+      $rootScope.activeUser = true;
+      $rootScope.activeWrite = false;
+    } else if (q = 2) {
+      $rootScope.activeWrite = true;
+      $rootScope.activeFull = false;
+      $rootScope.activeRoot = false;
+      $rootScope.activeUser = true;
+    } else if (q == 3) {
+      $rootScope.activeWrite = false;
+      $rootScope.activeFull = false;
+      $rootScope.activeUser = true;
+      $rootScope.activeRoot = false;
+    }
+  }
   $rootScope.$on('$stateChangeStart',
     function(event, toState, toParams, fromState, fromParams) {
       $timeout(function() {
-        if ($rootScope.toState != toState.name) {
-          $state.go(toState.name, toParams, {
-            reload: true
-          });
+        if (toState.name.indexOf("admin") > -1) {
+          if ($rootScope.user && $rootScope.toState !== toState.name) {
+            $state.go(toState.name, toParams, {
+              reload: true
+            });
+          }
+        } else {
+          if ($rootScope.toState != toState.name) {
+            $state.go(toState.name, toParams, {
+              reload: true
+            });
+          }
         }
       }, 100)
-    })
+    });
   if (typeof(Storage) !== "undefined" && localStorage.id) {
     $rootScope.user = {
       id: localStorage.id,
@@ -126,6 +161,7 @@ app.run(function($rootScope, $state, $uibModal, $timeout) {
       anh: localStorage.anh,
       username: localStorage.username
     }
+    $rootScope.setPer(localStorage.per);
   }
 
   function doiNgay(str) {
@@ -157,6 +193,33 @@ app.run(function($rootScope, $state, $uibModal, $timeout) {
   $rootScope.thu = doiNgay(moment().format('dddd'));
   $rootScope.ngay = moment().format("DD/MM/YYYY");
 
+  $rootScope.goTimKiem = function(tk){
+    if(tk){
+      $state.go("home.timkiem", {data: tk})
+    }
+  }
+  $rootScope.goBaiViet = function() {
+    $state.go("admin.dstintuc");
+  }
+
+  $rootScope.goMatKhau = function() {
+    $state.go("admin.tk")
+  }
+  $rootScope.goHeThong = function() {
+    $state.go("admin");
+  }
+  $rootScope.goThongTinCaNhan = function() {
+    $state.go("admin.ttchitiet", { id: $rootScope.user.id });
+  }
+  $rootScope.register = function() {
+    var modal = $uibModal.open({
+      animation: true,
+      templateUrl: "/views/dangky.html",
+      controller: 'dangkyCtrl',
+      controllerAs: 'dk'
+    })
+  }
+
   $rootScope.login = function() {
     var modal = $uibModal.open({
       animation: true,
@@ -172,8 +235,13 @@ app.run(function($rootScope, $state, $uibModal, $timeout) {
     if (typeof(Storage) !== "undefined") {
       localStorage.clear();
     }
+    $state.go("home");
   }
-  // $state.go("home");
+
+  if (!$rootScope.user && $state.current.name.indexOf("admin") > -1) {
+    $state.go('home');
+  }
+
 });
 
 app.factory("connect", function($http, $uibModal) {
@@ -227,6 +295,8 @@ app.factory("connect", function($http, $uibModal) {
     }
   }
 })
+
+
 
 var convertTAYouTubeMarkupToIframe = function(str) {
   if (!str) {

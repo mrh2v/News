@@ -1,5 +1,7 @@
 angular.module("appTinTuc").controller("userDsCtrl", function($scope, $rootScope, $state, toastr, connect) {
+  if (!$rootScope.user) return $state.go("home");
   $rootScope.toState = $state.current.name;
+
   function layDuLieu(offset, limit) {
     var ob = {
       offset: offset,
@@ -44,10 +46,17 @@ angular.module("appTinTuc").controller("userDsCtrl", function($scope, $rootScope
     }
   }
   $scope.editUser = function(data) {
-    $state.go("admin.updateuser", { id: data.ID });
+    var per = Number($rootScope.user.per);
+    if (per != 99 && per < data.QUYEN && data.QUYEN != 99) {
+      $state.go("admin.updateuser", { id: data.ID })
+    } else if (data.QUYEN == 99 && per == 99) {
+      $state.go("admin.updateuser", { id: data.ID })
+    } else {
+      toastr.warning('Không đủ quyền hạn !', "HÀNH ĐỘNG CẤM");
+    }
   }
 
-  $scope.xoaUser = function(data) {
+  function xoaABC(data) {
     connect.modal("XÓA THÔNG TIN NGƯỜI DÙNG", "Bạn có muốn xóa người dùng " + data.HO_TEN + "?", null, function(res) {
       if (res) {
         connect.delete("/user/delete", { id: data.ID }, function(cb) {
@@ -61,6 +70,17 @@ angular.module("appTinTuc").controller("userDsCtrl", function($scope, $rootScope
       }
     })
   }
+
+  $scope.xoaUser = function(data) {
+    var per = Number($rootScope.user.per);
+    if (per != 99 && per < data.QUYEN && data.QUYEN != 99) {
+      xoaABC(data);
+    } else if (data.QUYEN == 99 && per == 99) {
+      xoaABC(data);
+    } else {
+      toastr.warning('Không đủ quyền hạn !', "HÀNH ĐỘNG CẤM");
+    }
+  }
   layDuLieu(0, 5);
 })
 
@@ -69,6 +89,7 @@ angular.module("appTinTuc").controller("userCreateCtrl", function($scope, $rootS
     GIOI_TINH: "1",
     QUYEN: "3"
   }
+  var user = this;
   $rootScope.toState = $state.current.name;
   $scope.upload = function(file) {
     if (file) {
@@ -82,6 +103,23 @@ angular.module("appTinTuc").controller("userCreateCtrl", function($scope, $rootS
         })
       }
       reader.readAsDataURL(file);
+    }
+  }
+
+  var oldName = null;
+  $scope.checkTen = function(ten) {
+    if (oldName != ten && ten) {
+      oldName = ten;
+      $scope.tenError = false;
+      $scope.checking = true;
+      connect.get("/tai_khoan/check", { tk: ten }, function(cb) {
+        if (cb && cb == "yes") {
+          $scope.tenError = false;
+        } else if (cb) {
+          $scope.tenError = true;
+        }
+        $scope.checking = false;
+      })
     }
   }
 
@@ -100,6 +138,7 @@ angular.module("appTinTuc").controller("userCreateCtrl", function($scope, $rootS
 
   $scope.themtk = function(tk) {
     tk.ANH = $scope.avatar;
+    $scope.loading = true;
     connect.post("user/create", tk, function(cb) {
       if (cb && cb.ID) {
         toastr.success('Thêm người dùng thành công !');
@@ -110,10 +149,12 @@ angular.module("appTinTuc").controller("userCreateCtrl", function($scope, $rootS
       } else {
         toastr.error('Thêm người dùng thất bại !');
       }
+      $scope.loading = false;
     })
   }
   $scope.suatk = function(tk) {
     tk.ANH = $scope.avatar;
+    $scope.loading = true;
     connect.post("user/update", tk, function(cb) {
       if (cb && cb.ID) {
         toastr.success('Cập nhật thông tin thành công !');
@@ -121,10 +162,12 @@ angular.module("appTinTuc").controller("userCreateCtrl", function($scope, $rootS
       } else {
         toastr.error('Cập nhật thông tin thất bại !');
       }
+      $scope.loading = false;
     })
   }
 })
 angular.module("appTinTuc").controller('ttcnCtrl', function($timeout, $state, $rootScope, $scope, connect, toastr, $filter, $interval) {
+  if (!$rootScope.user) return $state.go("home");
   $rootScope.toState = $state.current.name;
   if ($rootScope.user && $rootScope.user.id) {
     connect.get("/user/get_by_id/" + $rootScope.user.id, null, function(res) {
@@ -187,6 +230,7 @@ angular.module("appTinTuc").controller('ttcnCtrl', function($timeout, $state, $r
 })
 
 angular.module("appTinTuc").controller('userTkCtrl', function($timeout, $state, $rootScope, $scope, connect, toastr, $filter, $interval) {
+  if (!$rootScope.user) return $state.go("home");
   var user = this;
   $rootScope.toState = $state.current.name;
   if ($rootScope.user) {

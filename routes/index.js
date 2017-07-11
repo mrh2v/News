@@ -20,8 +20,85 @@ tintuc.belongsTo(user, { foreignKey: 'ID_NGUOI_DANG', as: "NGUOI_DANG" });
 binhluan.belongsTo(tintuc, { foreignKey: 'ID_TIN', as: "TINTUC" });
 binhluan.belongsTo(user, { foreignKey: 'ID_USER', as: "USER" });
 
-
-
+router.get("/trang_chu/search", function(req, res, next) {
+  var timkiem = req.query.timkiem;
+  var arr = [];
+  if (timkiem) arr = timkiem.split(" ");
+  var like = [];
+  for (var i in arr) {
+    like.push({ $like: "%" + arr[i] }, { $like: "%" + arr[i] + "%" }, { $like: arr[i] + "%" })
+  }
+  var kq = [];
+  async.parallel([
+      function(callback) {
+        tintuc.findAll({
+          where: { TU_KHOA: { $or: like } },
+          limit: 5,
+          offset: 0,
+          attributes: ["ID", "TIEU_DE", "NOI_DUNG_TT", "THOI_GIAN", "ID_LOAI_TIN", "ANH_TD", "TU_KHOA"]
+        }).then(function(tin) {
+          callback(null, tin)
+        })
+      },
+      function(callback) {
+        tintuc.findAll({
+          where: { TIEU_DE: { $or: like } },
+          limit: 5,
+          offset: 0,
+          attributes: ["ID", "TIEU_DE", "NOI_DUNG_TT", "THOI_GIAN", "ID_LOAI_TIN", "ANH_TD", "TU_KHOA"]
+        }).then(function(tin) {
+          callback(null, tin)
+        })
+      },
+      function(callback) {
+        tintuc.findAll({
+          where: { NOI_DUNG_TT: { $or: like } },
+          limit: 5,
+          offset: 0,
+          attributes: ["ID", "TIEU_DE", "NOI_DUNG_TT", "THOI_GIAN", "ID_LOAI_TIN", "ANH_TD", "TU_KHOA"]
+        }).then(function(tin) {
+          callback(null, tin)
+        })
+      },
+      function(callback) {
+        tintuc.findAll({
+          where: { NOI_DUNG: { $or: like } },
+          limit: 5,
+          offset: 0,
+          attributes: ["ID", "TIEU_DE", "NOI_DUNG_TT", "THOI_GIAN", "ID_LOAI_TIN", "ANH_TD", "TU_KHOA"]
+        }).then(function(tin) {
+          callback(null, tin)
+        })
+      }
+    ],
+    function(err, results) {
+      if (err) return next(err)
+      var obcheck = {};
+      for (var i in results) {
+        for (var j in results[i]) {
+          if (!obcheck[results[i][j].ID]) {
+            kq.push(results[i][j]);
+            obcheck[results[i][j].ID] = true;
+          }
+        }
+      }
+      res.send(kq);
+    });
+})
+router.get("/tai_khoan/check", function(req, res, next) {
+  var name = req.query.tk;
+  user.findOne({
+    where: {
+      TEN_DANG_NHAP: name
+    }
+  }).then(function(tk) {
+    if (tk) {
+      res.send("no");
+    } else {
+      res.send("yes");
+    }
+  }).catch(next)
+})
 router.get("/tintuc/get_tin_desc_xem", function(req, res, next) {
   var loaitin = req.query.loaitin;
   var dk = {
@@ -99,7 +176,7 @@ router.get('/tintuc/get_new', function(req, res, next) {
     dk.where = {
       ID_LOAI_TIN: loaitin
     };
-    dk.include= [{model: nhom, as : "NHOM", attributes: ["TEN_NHOM"] }]
+    dk.include = [{ model: nhom, as: "NHOM", attributes: ["TEN_NHOM"] }]
   }
   tintuc.findAll(dk).then(function(results) {
     res.send(results);
@@ -150,12 +227,18 @@ router.get('/tintuc/get_offset', function(req, res, next) {
       ["THOI_GIAN", "DESC"]
     ]
   }
+  var dk1 = {};
   if (id) {
     dk.where = {
       ID_NGUOI_DANG: id
     }
+    dk1 = {
+      where: {
+        ID_NGUOI_DANG: id
+      }
+    }
   }
-  tintuc.count().then(function(size) {
+  tintuc.count(dk1).then(function(size) {
     tintuc.findAll(dk).then(function(results) {
       res.send({
         data: results,
@@ -168,15 +251,20 @@ router.get('/tintuc/get_offset', function(req, res, next) {
 router.post("/hethong/save_img", function(req, res, next) {
   var file = req.body;
   var folder = new Date().getTime();
-  mkdirp(path.join(__dirname, "/..") + "/upload/" + file.id + "/" + folder, function(err) {
-    if (err) res.sendStatus(500);
-    var url = path.join(__dirname, "/..") + "/upload/" + file.id + "/" + folder + "/" + file.name;
-    var data = file.data.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-    fs.writeFile(url, new Buffer(data[2], "base64"), function(err) {
+  var data = null;
+  try {
+    data = file.data.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    mkdirp(path.join(__dirname, "/..") + "/upload/" + file.id + "/" + folder, function(err) {
       if (err) res.sendStatus(500);
-      res.send("/" + file.id + "/" + folder + "/" + file.name);
+      var url = path.join(__dirname, "/..") + "/upload/" + file.id + "/" + folder + "/" + file.name;
+      fs.writeFile(url, new Buffer(data[2], "base64"), function(err) {
+        if (err) res.sendStatus(500);
+        res.send("/" + file.id + "/" + folder + "/" + file.name);
+      })
     })
-  })
+  } catch (err) {
+    res.sendStatus(500);
+  }
 })
 
 router.post("/hethong/login", function(req, res, next) {

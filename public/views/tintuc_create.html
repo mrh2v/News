@@ -2,10 +2,10 @@
   <h4>SOẠN THẢO BÀI VIẾT</h4>
 </div>
 <div class="col-md-12">
-  <form>
+  <form name="formBaiViet">
     <div class="form-group">
-      <label>Tiêu đề</label>
-      <input type="text" class="form-control" placeholder="Nhập tiêu đề bài viết" ng-model="tintuc.TIEU_DE" maxlength="255">
+      <label>Tiêu đề</label> (<span style="color: red;">*</span>) <i> Tối thiểu 20 kí tự</i>
+      <input type="text" class="form-control" placeholder="Nhập tiêu đề bài viết" ng-model="tintuc.TIEU_DE" minlength="20" maxlength="255" required="true">
     </div>
     <div class="col-md-12" style="margin-bottom: 1%;">
       <div style="height: 202px; width: 302px; border: 1px dashed; margin-left: 30%;" ngf-select="uploadAnh($file)" ngf-drop="uploadAnh($file)">
@@ -15,7 +15,7 @@
     </div>
     <div class="col-md-12">
       <div class="col-md-6 form-group">
-        <label>Danh mục tin tức</label>
+        <label>Danh mục tin tức</label> (<span style="color: red;">*</span>)
         <select class="form-control" ng-model="tintuc.ID_LOAI_TIN">
           <option value selected>Chọn danh mục tin tức</option>
           <option ng-repeat="dm in danhmucs" value="{{dm.ID}}">{{dm.TEN_NHOM}}</option>
@@ -27,18 +27,18 @@
       </div>
     </div>
     <div class="form-group">
-      <label>Nội dung tóm tắt</label>
-      <textarea row="5" cols="50" class="form-control" placeholder="Nhập nội dung tóm tắt" ng-model="tintuc.NOI_DUNG_TT"></textarea>
+      <label>Nội dung tóm tắt</label> (<span style="color: red;">*</span>) <i> Tối thiểu 20 kí tự</i>
+      <textarea row="5" cols="50" class="form-control" placeholder="Nhập nội dung tóm tắt" maxlength="255" minlength="20" ng-model="tintuc.NOI_DUNG_TT" required="true"></textarea>
     </div>
   </form>
 </div>
 <div class="form-group col-md-12">
-  <label>Nội dung tin tức</label>
+  <label>Nội dung tin tức</label> (<span style="color: red;">*</span>)
 </div>
 <div class="col-md-12" style="margin-bottom: 1%;" ng-repeat="file in files">
   <div class="col-md-5">
     <button ng-class="{'btn' : !file.name, 'btn btn-success': file.name}" ngf-select="upload($file)" ng-disabled="file.url">{{file.name ? file.name : "Upload tập tin ..."}}</button>
-    <button class="btn btn-primary" ng-click="saveFile($index)" ng-if="!file.url">Lấy đường dẫn</button>
+    <button class="btn btn-primary" ng-click="saveFile($index)" ng-if="!file.url" ng-disabled="!file.name">Lấy đường dẫn</button>
   </div>
   <div class="col-md-7">
     <input type="text" class="form-control" placeholder="Đường dẫn file" ng-model="file.url">
@@ -48,6 +48,6 @@
   <text-angular ng-model="noidung"></text-angular>
 </div>
 <div class="col-md-12 text-right" style="margin-top: 1%;">
-  <button class="btn btn-info" ng-click="detailTintuc(tintuc)">Xem trước</button>
-  <button class="btn btn-success" ng-click="saveTintuc(tintuc)">Đăng tải bài viết</button>
+  <button class="btn btn-info" ng-click="xemTintuc(tintuc)" ng-disabled="!noidung">Xem trước</button>
+  <button class="btn btn-success" ng-click="saveTintuc(tintuc)" ng-disabled="formBaiViet.$invalid || loading">Đăng tải bài viết</button>
 </div>

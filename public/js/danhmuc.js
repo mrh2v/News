@@ -1,6 +1,8 @@
 angular.module("appTinTuc").controller("danhMucCtrl", function($scope, $rootScope, $state, connect, toastr) {
+  if (!$rootScope.user) return $state.go("home");
   var dm = this;
   $rootScope.toState = $state.current.name;
+
   function layDuLieu(offset, limit) {
     var ob = {
       offset: offset,
@@ -59,6 +61,7 @@ angular.module("appTinTuc").controller("danhMucCtrl", function($scope, $rootScop
 });
 angular.module("appTinTuc").controller("danhMucChiTietCtrl", function($scope, $rootScope, $state, connect, $timeout, toastr) {
   var dm = this;
+  $rootScope.toState = $state.current.name;
   if ($state.params.id) {
     //update
     dm.update = true;
