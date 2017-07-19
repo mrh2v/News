@@ -28,11 +28,11 @@
     </div>
   </div>
 </nav>
-<div class="row">
-  <div class="col-md-1">
-    <!-- banner Left -->
-  </div>
-  <div class="col-md-10">
+<div class="container">
+  <!-- <div class="col-md-1">
+    banner Left
+  </div> -->
+  <div class="container">
     <div id="line-bar">
     </div>
     <ul class="nav nav-pills" id="bar-chude">
@@ -88,12 +88,11 @@
         </div>
       </div>
       <div class="col-md-3 new-left" style="border: 1px solid #ededed; overflow: hidden;">
-        <div class="col-md-12" style="margin-top: 2%; border-bottom: 1px solid #ededed; height: 60px;" ng-repeat="tin in tinViews">
+        <div class="col-md-12" style="margin-top: 2%; border-bottom: 1px solid #ededed; min-height: 60px;" ng-repeat="tin in tinViews">
           <b ng-bind="tin.TIEU_DE" style="color: brown;cursor: pointer;" ng-click="detailTin(tin)"></b> <span style="float: right;color: cadetblue;"><i class="glyphicon glyphicon-eye-open"></i> {{tin.SO_LAN_XEM}}</span>
         </div>
       </div>
       <div ng-repeat="data in dataTinNhom" style="height: 100px;">
-        <!-- <div style="height: 1px; background: green; margin-top: 2%;" class="col-md-12"></div> -->
         <div style="width: 100%;">
           <hr/>
         </div>
@@ -128,7 +127,7 @@
       <ui-view></ui-view>
     </div>
   </div>
-  <div class="col-md-1">
-    <!-- banner right -->
-  </div>
+  <!-- <div class="col-md-1">
+    banner right
+  </div> -->
 </div>
